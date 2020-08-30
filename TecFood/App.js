@@ -1,23 +1,28 @@
-import { StatusBar } from "expo-status-bar";
+import {
+  StatusBar,
+  setStatusBarTranslucent,
+  setStatusBarBackgroundColor,
+  setStatusBarStyle,
+} from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Platform } from "react-native";
+import { useDeviceOrientation } from "@react-native-community/hooks";
 
 export default function App() {
-  let x = 1;
-  console.log("App executed");
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>POC Test IMOUTO!</Text>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
+    backgroundColor: "#EDEDED",
+    paddingTop: Platform.OS === "android" ? "6%" : 0,
     justifyContent: "center",
+    alignItems: "center",
   },
 });
