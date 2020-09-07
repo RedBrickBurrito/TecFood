@@ -1,42 +1,35 @@
-import {
-  StatusBar,
-  setStatusBarTranslucent,
-  setStatusBarBackgroundColor,
-  setStatusBarStyle,
-} from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView, Platform, Button } from "react-native";
+import React, { useState } from "react";
 import { useDeviceOrientation } from "@react-native-community/hooks";
-import axios from 'axios';
+import axios from "axios";
+import SignUp from "./app/screens/SignUp";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
 
-export default function App() {
-  const getOrders = () => {
-    axios.get('https://tecfood.herokuapp.com/orders').then(response => {
-      console.log(response.data);
-    }).catch(err => {
-      console.log(err);
-    })
+let customFonts = {
+  Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
+  OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
+  OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
+};
+
+export default class App extends React.Component {
+  state = {
+    fontsLoaded: false,
+  };
+
+  async _loadFontsAsync() {
+    await Font.loadAsync(customFonts);
+    this.setState({ fontsLoaded: true });
   }
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text>POC Test IMOUTO!</Text>
-      <Button
-        onPress={getOrders}
-        title="Get Orders"
-        color="#f2e56f"
-      />
-      <StatusBar style="auto" />
-    </SafeAreaView>
-  );
-}
+  componentDidMount() {
+    this._loadFontsAsync();
+  }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#EDEDED",
-    paddingTop: Platform.OS === "android" ? "6%" : 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+  render() {
+    if (this.state.fontsLoaded) {
+      return <SignUp />;
+    } else {
+      return <AppLoading />;
+    }
+  }
+}
