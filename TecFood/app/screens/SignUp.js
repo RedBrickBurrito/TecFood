@@ -7,7 +7,12 @@ import {
   StatusBar,
   Text,
   ClippingRectangle,
+  Dimensions,
 } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 function SignUp(props) {
   return (
@@ -28,14 +33,9 @@ function SignUp(props) {
       </ImageBackground>
       <Text style={styles.header_text}>Registrarse</Text>
       <ImageBackground
-        style={styles.rectangle_form}
-        source={require("../assets/Rectangle_3.png")}
-      >
-        <Image
-          style={styles.signup_form}
-          source={require("../assets/SignUpForm.png")}
-        ></Image>
-      </ImageBackground>
+        source={require("../assets/SignupForm.png")}
+        style={styles.signup_form}
+      />
       <Text style={styles.mainText}>
         ¿Ya tienes una cuenta?{" "}
         <Text style={styles.boldText}>Inicia sesión</Text>
@@ -50,69 +50,45 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9fefe",
   },
   tecfoodslogo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    marginLeft: 140,
-    marginTop: 95,
-    width: 82,
-    height: 86,
+    width: wp("20.35"),
+    height: hp("11.4"),
+    marginLeft: wp("5%"),
   },
   header_vector: {
-    left: -110,
-    top: -40,
-    width: 627,
-    height: 280,
-    shadowColor: "#7ba1a2",
-    shadowOffset: { width: 10, height: 10 },
-    shadowRadius: 35,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    top: hp("-6%"),
+    width: wp("100%"),
+    height: hp("35%"),
   },
   header_text: {
     position: "absolute",
-    top: 210,
-    left: 80,
-    width: "100%",
-    height: 55,
+    textAlign: "center",
+    top: hp("26%"),
+    width: wp("100%"),
+    height: hp("100%"),
     color: "#182a3a",
     fontFamily: "Coolvetica",
     fontSize: 45,
     fontWeight: "400",
-    lineHeight: 54,
   },
-  signup_form: {
-    position: "absolute",
-    top: -0,
-    left: -42,
-    width: 280,
-    height: 300,
-    shadowColor: "#ffffff",
-    shadowOffset: { width: -24, height: -24 },
-    shadowRadius: 42,
-    borderRadius: 29,
-    backgroundColor: "#f7fbfb",
-  },
-  rectangle_form: {
-    position: "absolute",
-    top: 280,
-    left: 50,
-    width: 330,
-    height: 450,
-    shadowColor: "#ffffff",
-    shadowOffset: { width: -24, height: -2 },
-    shadowRadius: 42,
-  },
+
   mainText: {
     position: "absolute",
+    alignSelf: "center",
     textAlign: "center",
-    top: 690,
-    left: 86,
-    width: 203,
-    height: 17,
+    top: "90%",
     color: "#182a3a",
     fontFamily: "OpenSans_Regular",
     fontSize: 12,
     fontWeight: "400",
-    lineHeight: 14.4,
+  },
+  signup_form: {
+    alignSelf: "center",
+    top: hp("-4%"),
+    bottom: hp("30%"),
+    width: wp("95%"),
+    height: hp("60%"),
   },
   boldText: {
     color: "#24da9d",

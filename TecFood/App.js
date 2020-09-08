@@ -4,7 +4,6 @@ import axios from "axios";
 import SignUp from "./app/screens/SignUp";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
