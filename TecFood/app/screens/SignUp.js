@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Image,
@@ -6,8 +6,10 @@ import {
   ImageBackground,
   StatusBar,
   Text,
+  TextInput,
   ClippingRectangle,
   Dimensions,
+  Button,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -15,6 +17,12 @@ import {
 } from "react-native-responsive-screen";
 
 function SignUp(props) {
+  const [data, setData] = useState({name: "", email: "", password: ""});
+
+  const handleSubmit = () => {
+    console.log(data);
+  }
+
   return (
     <View style={styles.background}>
       <StatusBar
@@ -32,10 +40,32 @@ function SignUp(props) {
         />
       </ImageBackground>
       <Text style={styles.header_text}>Registrarse</Text>
-      <ImageBackground
-        source={require("../assets/SignupForm.png")}
-        style={styles.signup_form}
-      />
+      <View style={styles.signup_form}>
+        <View id="form">
+          <TextInput 
+            id="name" 
+            style={styles.signup_text} 
+            onChangeText={text => setData({...data, name: text})} 
+            value={data.name} 
+            placeholder="Name"
+          />
+          <TextInput 
+            id="email" 
+            style={styles.signup_text} 
+            onChangeText={text => setData({...data, email: text})} 
+            value={data.email} 
+            placeholder="Email"
+          />
+          <TextInput 
+            id="password" 
+            style={styles.signup_text} 
+            onChangeText={text => setData({...data, password: text})} 
+            value={data.password} 
+            placeholder="Password"
+          />
+          <Button title="Registrate" onPress={handleSubmit} color="#09bc8a" style={styles.submit_button}/>
+        </View>
+      </View>
       <Text style={styles.mainText}>
         ¿Ya tienes una cuenta?{" "}
         <Text style={styles.boldText}>Inicia sesión</Text>
@@ -64,15 +94,13 @@ const styles = StyleSheet.create({
   header_text: {
     position: "absolute",
     textAlign: "center",
-    top: hp("26%"),
+    top: hp("22%"),
     width: wp("100%"),
-    height: hp("100%"),
     color: "#182a3a",
     fontFamily: "Coolvetica",
     fontSize: 45,
     fontWeight: "400",
   },
-
   mainText: {
     position: "absolute",
     alignSelf: "center",
@@ -87,8 +115,29 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     top: hp("-4%"),
     bottom: hp("30%"),
-    width: wp("95%"),
-    height: hp("60%"),
+    width: wp("80%"),
+    height: hp("55%"),
+    backgroundColor: "#f7fbfb",
+    boxShadow: "8px 0px 8px lightgrey, 0px 8px 8px lightgrey",
+    paddingTop: hp("3%"),
+  },
+  signup_text: {
+    alignSelf: "center",
+    width: wp("60%"),
+    height: hp("5%"),
+    padding: hp("3%"),
+    marginTop: hp("3%"),
+    borderRadius: "25px",
+    boxShadow: "6px 0px 7px lightgrey inset, 0px 6px 7px lightgrey inset",
+    textAlignVertical: "center",
+    fontSize: 18,
+    fontFamily: "OpenSans_Regular",
+  },
+  submit_button:{
+    alignSelf: "center",
+    borderRadius: "25px",
+    fontFamily: "OpenSans_Regular",
+    fontSize: 20,
   },
   boldText: {
     color: "#24da9d",
