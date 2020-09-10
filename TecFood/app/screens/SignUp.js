@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
     fontWeight: "400",
   },
   signup_form: {
+    marginTop: "4%",
     alignSelf: "center",
     top: hp("-4%"),
-    bottom: hp("30%"),
     width: wp("100%"),
     height: hp("60%"),
     paddingTop: hp("3%"),
@@ -165,8 +165,8 @@ const styles = StyleSheet.create({
     borderRadius: 19,
     height: hp("6%"),
     elevation: Platform.OS === "android" ? 23 : 0,
-    shadowColor: "#81c7af",
-    shadowOffset: { width: 10, height: 10 },
+    shadowColor: Platform.OS === "ios" ? "#81c7af" : null,
+    shadowOffset: Platform.OS === "ios" ? { width: 10, height: 10 } : null,
   },
   submit_text: {
     padding: "7%",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   input: {
     alignSelf: "center",
     top: "20%",
-    width: wp("45%"),
+    width: wp("53%"),
     height: hp("5%"),
     alignItems: "flex-start",
     paddingLeft: wp("3%"),
