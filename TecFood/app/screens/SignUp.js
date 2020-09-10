@@ -9,8 +9,10 @@ import {
   TextInput,
   ClippingRectangle,
   Dimensions,
-  Button,
+  Pressable,
+  Alert,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -46,36 +48,44 @@ function SignUp(props) {
         source={require("../assets/SignUpForm.png")}
       >
         <View id="form">
-          <TextInput
-            id="name"
-            style={styles.signup_text}
-            onChangeText={(text) => setData({ ...data, name: text })}
-            value={data.name}
-            placeholder="Name"
-            placeholderTextColor="#D50000"
-          />
-          <TextInput
-            id="email"
-            style={styles.signup_text}
-            onChangeText={(text) => setData({ ...data, email: text })}
-            value={data.email}
-            placeholder="Email"
-            placeholderTextColor="#D50000"
-          />
-          <TextInput
-            id="password"
-            style={styles.signup_text}
-            onChangeText={(text) => setData({ ...data, password: text })}
-            value={data.password}
-            placeholder="Password"
-          />
-          <TouchableOpacity onPress={handleSubmit}>
-            <ImageBackground
-              source={require("../assets/Button.png")}
-              style={styles.submit_button}
-            >
-              <Text>Registrar</Text>
-            </ImageBackground>
+          <ImageBackground
+            source={require("../assets/InputField.png")}
+            style={styles.input}
+          >
+            <TextInput
+              id="name"
+              style={styles.signup_text}
+              onChangeText={(text) => setData({ ...data, name: text })}
+              value={data.name}
+              placeholder="Nombre"
+            />
+          </ImageBackground>
+          <ImageBackground
+            source={require("../assets/InputField.png")}
+            style={styles.input}
+          >
+            <TextInput
+              id="email"
+              style={styles.signup_text}
+              onChangeText={(text) => setData({ ...data, email: text })}
+              value={data.email}
+              placeholder="Email"
+            />
+          </ImageBackground>
+          <ImageBackground
+            source={require("../assets/InputField.png")}
+            style={styles.input}
+          >
+            <TextInput
+              id="password"
+              style={styles.signup_text}
+              onChangeText={(text) => setData({ ...data, password: text })}
+              value={data.password}
+              placeholder="Password"
+            />
+          </ImageBackground>
+          <TouchableOpacity style={styles.submit_button} onPress={handleSubmit}>
+            <Text style={styles.submit_text}>Registrar</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -107,7 +117,7 @@ const styles = StyleSheet.create({
   header_text: {
     position: "absolute",
     textAlign: "center",
-    top: hp("22%"),
+    top: hp("25%"),
     width: wp("100%"),
     color: "#182a3a",
     fontFamily: "Coolvetica",
@@ -118,7 +128,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     textAlign: "center",
-    top: "90%",
+    top: hp("93%"),
     color: "#182a3a",
     fontFamily: "OpenSans_Regular",
     fontSize: 12,
@@ -134,33 +144,49 @@ const styles = StyleSheet.create({
   },
   signup_text: {
     alignSelf: "center",
-    width: wp("60%"),
-    height: hp("5%"),
-    padding: hp("3%"),
-    marginTop: hp("3%"),
-    borderRadius: 25,
-    //boxShadow: "6px 0px 7px lightgrey inset, 0px 6px 7px lightgrey inset",
-    textAlignVertical: "center",
-    fontSize: 12,
+    alignItems: "center",
+    width: wp("45%"),
+    height: hp("3.2%"),
+    fontSize: 14,
     fontWeight: "600",
     fontFamily: "OpenSans_Regular",
     color: "#53687b",
-    lineHeight: 14.4,
+    paddingTop: hp(".5%"),
+    paddingLeft: wp("1.5%"),
   },
   submit_button: {
     alignSelf: "center",
     alignItems: "center",
-    borderRadius: 25,
     fontFamily: "OpenSans_Regular",
     fontSize: 20,
-    width: wp("50%"),
-    height: hp("10%"),
-    top: "30%",
+    top: hp("15%"),
+    width: wp("35%"),
+    backgroundColor: "#24da9d",
+    borderRadius: 19,
+    height: hp("6%"),
+    elevation: Platform.OS === "android" ? 23 : 0,
+    shadowColor: "#81c7af",
+    shadowOffset: { width: 10, height: 10 },
+  },
+  submit_text: {
+    padding: "7%",
+    textAlign: "center",
   },
   boldText: {
     color: "#24da9d",
     fontFamily: "OpenSans_Bold",
     fontWeight: "700",
+  },
+  input: {
+    alignSelf: "center",
+    top: "20%",
+    width: wp("45%"),
+    height: hp("5%"),
+    alignItems: "flex-start",
+    paddingLeft: wp("3%"),
+    paddingTop: hp("0.5"),
+    marginBottom: hp("3%"),
+    marginTop: hp("1%"),
   },
 });
 
