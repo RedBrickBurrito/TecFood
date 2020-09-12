@@ -6,25 +6,32 @@ import {
   ImageBackground,
   StatusBar,
   Text,
-  TextInput,
-  ClippingRectangle,
-  Dimensions,
-  Pressable,
-  Alert,
-  TouchableOpacity,
-  Platform,
+  TouchableWithoutFeedback,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Button, Card, Input } from '@ui-kitten/components'
+import { Button, Card, Input, Icon } from '@ui-kitten/components'
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
 
   const handleSubmit = () => {
     console.log(data);
+
+  };
+
+  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+
+  const renderIcon = (props) => (
+    <TouchableWithoutFeedback onPress={toggleSecureEntry}>
+      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+    </TouchableWithoutFeedback>
+  );
+
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
   };
 
   return (
@@ -47,15 +54,33 @@ function SignUp(props) {
 
       <Card style={styles.card}>
         <Input
-          placeholder="Name"
+          placeholder="Nombre"
           value={data.name}
           onChangeText={value => setData({...data, name: value})}
           style={styles.submit_text}
           status="basic"
           textStyle={styles.input_text}
         />
-        <Button onPress={handleSubmit} style={styles.submit_button}>
-          Boton de Kitten
+                <Input
+          placeholder="Correo"
+          value={data.email}
+          onChangeText={value => setData({...data, email: value})}
+          style={styles.submit_text}
+          status="basic"
+          textStyle={styles.input_text}
+        />
+                <Input
+          placeholder="Contraseña"
+          value={data.password}
+          onChangeText={value => setData({...data, password: value})}
+          style={styles.submit_text}
+          status="basic"
+          accessoryRight={renderIcon}
+          secureTextEntry={true}
+          textStyle={styles.input_text}
+        />
+        <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary'>
+          Registrar
         </Button>
       </Card>
       <Text style={styles.mainText}>
@@ -106,15 +131,15 @@ const styles = StyleSheet.create({
   submit_button: {
     alignSelf: "center",
     alignItems: "center",
+    top: hp("5%"),
+    elevation: 12,
     fontFamily: "OpenSans_Regular",
     fontSize: 20,
-    backgroundColor: "#24da9d",
     borderRadius: 19,
   },
   submit_text: {
     padding: "7%",
     borderRadius: 20,
-    backgroundColor: "#f9fefe",
   },
   boldText: {
     color: "#24da9d",
@@ -144,7 +169,7 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   input_text: {
-    color: "blue",
+    color: "#172A3A",
   }
 });
 

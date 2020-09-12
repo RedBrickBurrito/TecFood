@@ -4,13 +4,15 @@ import axios from "axios";
 import SignUp from "./app/screens/SignUp";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import { ApplicationProvider } from '@ui-kitten/components'
+import * as eva from '@eva-design/eva';
+import { default as theme } from './custom-theme.json'; // <-- Import app theme
+
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
-import { ApplicationProvider } from '@ui-kitten/components'
-import * as eva from '@eva-design/eva';
 
 export default class App extends React.Component {
   state = {
@@ -29,7 +31,7 @@ export default class App extends React.Component {
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <ApplicationProvider {...eva} theme={eva.light}>
+        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
           <SignUp />
         </ApplicationProvider>
       );
