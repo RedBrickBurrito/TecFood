@@ -18,6 +18,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { Button, Card, Input } from '@ui-kitten/components'
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -43,52 +44,20 @@ function SignUp(props) {
         />
       </ImageBackground>
       <Text style={styles.header_text}>Registrarse</Text>
-      <ImageBackground
-        style={styles.signup_form}
-        source={require("../assets/SignUpForm.png")}
-      >
-        <View id="form">
-          <ImageBackground
-            source={require("../assets/InputField.png")}
-            style={styles.input}
-          >
-            <TextInput
-              id="name"
-              style={styles.signup_text}
-              onChangeText={(text) => setData({ ...data, name: text })}
-              value={data.name}
-              placeholder="Nombre"
-            />
-          </ImageBackground>
-          <ImageBackground
-            source={require("../assets/InputField.png")}
-            style={styles.input}
-          >
-            <TextInput
-              id="email"
-              style={styles.signup_text}
-              onChangeText={(text) => setData({ ...data, email: text })}
-              value={data.email}
-              placeholder="Email"
-            />
-          </ImageBackground>
-          <ImageBackground
-            source={require("../assets/InputField.png")}
-            style={styles.input}
-          >
-            <TextInput
-              id="password"
-              style={styles.signup_text}
-              onChangeText={(text) => setData({ ...data, password: text })}
-              value={data.password}
-              placeholder="Password"
-            />
-          </ImageBackground>
-          <TouchableOpacity style={styles.submit_button} onPress={handleSubmit}>
-            <Text style={styles.submit_text}>Registrar</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
+
+      <Card style={styles.card}>
+        <Input
+          placeholder="Name"
+          value={data.name}
+          onChangeText={value => setData({...data, name: value})}
+          style={styles.submit_text}
+          status="basic"
+          textStyle={styles.input_text}
+        />
+        <Button onPress={handleSubmit} style={styles.submit_button}>
+          Boton de Kitten
+        </Button>
+      </Card>
       <Text style={styles.mainText}>
         ¿Ya tienes una cuenta?{" "}
         <Text style={styles.boldText}>Inicia sesión</Text>
@@ -134,43 +103,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "400",
   },
-  signup_form: {
-    marginTop: "4%",
-    alignSelf: "center",
-    top: hp("-4%"),
-    width: wp("100%"),
-    height: hp("60%"),
-    paddingTop: hp("3%"),
-  },
-  signup_text: {
-    alignSelf: "center",
-    alignItems: "center",
-    width: wp("45%"),
-    height: hp("3.2%"),
-    fontSize: 14,
-    fontWeight: "600",
-    fontFamily: "OpenSans_Regular",
-    color: "#53687b",
-    paddingTop: hp(".5%"),
-    paddingLeft: wp("1.5%"),
-  },
   submit_button: {
     alignSelf: "center",
     alignItems: "center",
     fontFamily: "OpenSans_Regular",
     fontSize: 20,
-    top: hp("15%"),
-    width: wp("35%"),
     backgroundColor: "#24da9d",
     borderRadius: 19,
-    height: hp("6%"),
-    elevation: Platform.OS === "android" ? 23 : 0,
-    shadowColor: Platform.OS === "ios" ? "#81c7af" : null,
-    shadowOffset: Platform.OS === "ios" ? { width: 10, height: 10 } : null,
   },
   submit_text: {
     padding: "7%",
-    textAlign: "center",
+    borderRadius: 20,
+    backgroundColor: "#f9fefe",
   },
   boldText: {
     color: "#24da9d",
@@ -188,6 +132,20 @@ const styles = StyleSheet.create({
     marginBottom: hp("3%"),
     marginTop: hp("1%"),
   },
+  card: {
+    alignSelf: "center",
+    width: wp("75%"),
+    height: hp("50%"),
+    backgroundColor: '#f7fbfb',
+    borderRadius: 29,
+    shadowColor: '#dbebeb',
+    shadowOffset: { width: 24, height: 24 },
+    shadowRadius: 42,
+    elevation: 20,
+  },
+  input_text: {
+    color: "blue",
+  }
 });
 
 export default SignUp;

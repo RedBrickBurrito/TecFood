@@ -9,6 +9,8 @@ let customFonts = {
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
+import { ApplicationProvider } from '@ui-kitten/components'
+import * as eva from '@eva-design/eva';
 
 export default class App extends React.Component {
   state = {
@@ -26,7 +28,11 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.fontsLoaded) {
-      return <SignUp />;
+      return (
+        <ApplicationProvider {...eva} theme={eva.light}>
+          <SignUp />
+        </ApplicationProvider>
+      );
     } else {
       return <AppLoading />;
     }
