@@ -24,15 +24,15 @@ function SignUp(props) {
 
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
 
+  const toggleSecureEntry = () => {
+    setSecureTextEntry(!secureTextEntry);
+  };
+
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
       <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
     </TouchableWithoutFeedback>
   );
-
-  const toggleSecureEntry = () => {
-    setSecureTextEntry(!secureTextEntry);
-  };
 
   return (
     <View style={styles.background}>
@@ -61,7 +61,7 @@ function SignUp(props) {
           status="basic"
           textStyle={styles.input_text}
         />
-                <Input
+        <Input
           placeholder="Correo"
           value={data.email}
           onChangeText={value => setData({...data, email: value})}
@@ -69,14 +69,14 @@ function SignUp(props) {
           status="basic"
           textStyle={styles.input_text}
         />
-                <Input
+        <Input
           placeholder="Contraseña"
           value={data.password}
           onChangeText={value => setData({...data, password: value})}
           style={styles.submit_text}
           status="basic"
           accessoryRight={renderIcon}
-          secureTextEntry={true}
+          secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
         />
         <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary'>
@@ -136,6 +136,11 @@ const styles = StyleSheet.create({
     fontFamily: "OpenSans_Regular",
     fontSize: 20,
     borderRadius: 19,
+    shadowColor: "#000",
+    shadowOffset: { width: 0,height: 10 },
+    shadowOpacity: 0.51,
+    shadowRadius: 13.16,
+
   },
   submit_text: {
     padding: "7%",
