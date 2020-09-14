@@ -40,25 +40,25 @@ function SignUp(props) {
     setValidated(true);
 
     if(data.name === "") {
-      setStatus({...status, name: "danger"})
+      setStatus(prevState => { return {...prevState, name: "danger"}})
       setValidated(false)
     } else {
-      setStatus({...status, name: "success"})
+      setStatus(prevState => { return {...prevState, name: "success"}})
     }
 
     if(!passwordRegExp.test(data.password)) {      
-      setStatus({...status, password: "danger"})
+      setStatus(prevState => { return {...prevState, password: "danger"}})
       setValidated(false)
     } else {
-      setStatus({...status, password: "success"})
+      setStatus(prevState => { return {...prevState, password: "success"}})
     }
 
     if(!emailRegExp.test(data.email)) {
-      setStatus({...status, email: "danger"})
+      setStatus(prevState => { return {...prevState, email: "danger"}})
       setValidated(false)
 
     } else {
-      setStatus({...status, email: "success"})
+      setStatus(prevState => { return {...prevState, email: "success"}})
     }
   }
 
@@ -95,7 +95,10 @@ function SignUp(props) {
         <Input
           placeholder="Nombre"
           value={data.name}
-          onChangeText={value => {setData({...data, name: value}); validate();}}
+          onChangeText={value => {
+            setData({...data, name: value});
+            validate();
+          }}
           style={styles.submit_text}
           status={status.name}
           textStyle={styles.input_text}
@@ -103,7 +106,10 @@ function SignUp(props) {
         <Input
           placeholder="Correo"
           value={data.email}
-          onChangeText={value => {setData({...data, email: value}); validate()}}
+          onChangeText={value => {
+            setData({...data, email: value});
+            validate()
+          }}
           style={styles.submit_text}
           status={status.email}
           textStyle={styles.input_text}
