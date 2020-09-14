@@ -16,14 +16,55 @@ import { Button, Card, Input, Icon } from '@ui-kitten/components'
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
+  const [status, setStatus] = useState({email: "basic", password: "basic", name: "basic"})
+  const [validated, setValidated] = useState(false)
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
 
   const handleSubmit = () => {
-    console.log(data);
+    validate();
+
+    if(validated) {
+      console.log("Los valores se validaron")
+      console.log(data)
+    } else {
+      console.log("no esta validado")
+      console.log(status)
+    }
 
   };
 
-  const [secureTextEntry, setSecureTextEntry] = React.useState(true);
+  const validate = () => {
+    const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
+    const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi
 
+    setValidated(true);
+    setStatus({email: "basic", password: "basic", name: "basic"})
+
+    if(data.name === "") {
+      setStatus({...status, name: "danger"})
+      setValidated(false)
+    } else {
+      setStatus({...status, name: "success"})
+    }
+
+    if(!passwordRegExp.test(data.password)) {      
+      setStatus({...status, password: "danger"})
+      setValidated(false)
+    } else {
+      setStatus({...status, password: "success"})
+    }
+
+    if(!emailRegExp.test(data.email)) {
+      setStatus({...status, email: "danger"})
+      setValidated(false)
+
+    } else {
+      setStatus({...status, email: "success"})
+    }
+  }
+
+  
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
@@ -58,7 +99,7 @@ function SignUp(props) {
           value={data.name}
           onChangeText={value => setData({...data, name: value})}
           style={styles.submit_text}
-          status="basic"
+          status={status.name}
           textStyle={styles.input_text}
         />
         <Input
@@ -66,7 +107,7 @@ function SignUp(props) {
           value={data.email}
           onChangeText={value => setData({...data, email: value})}
           style={styles.submit_text}
-          status="basic"
+          status={status.email}
           textStyle={styles.input_text}
         />
         <Input
@@ -74,10 +115,11 @@ function SignUp(props) {
           value={data.password}
           onChangeText={value => setData({...data, password: value})}
           style={styles.submit_text}
-          status="basic"
+          status={status.password}
           accessoryRight={renderIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
+          caption="Debe contener minimo 8 caracteres, 1 numero, una letra mayuscula y minuscula."
         />
         <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary'>
           Registrar
@@ -131,7 +173,7 @@ const styles = StyleSheet.create({
   submit_button: {
     alignSelf: "center",
     alignItems: "center",
-    top: hp("5%"),
+    top: hp("2%"),
     elevation: 12,
     fontFamily: "OpenSans_Regular",
     fontSize: 20,
