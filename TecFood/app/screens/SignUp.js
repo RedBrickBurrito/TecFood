@@ -22,7 +22,6 @@ function SignUp(props) {
 
 
   const handleSubmit = () => {
-    validate();
 
     if(validated) {
       console.log("Los valores se validaron")
@@ -39,7 +38,6 @@ function SignUp(props) {
     const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi
 
     setValidated(true);
-    setStatus({email: "basic", password: "basic", name: "basic"})
 
     if(data.name === "") {
       setStatus({...status, name: "danger"})
@@ -97,7 +95,7 @@ function SignUp(props) {
         <Input
           placeholder="Nombre"
           value={data.name}
-          onChangeText={value => setData({...data, name: value})}
+          onChangeText={value => {setData({...data, name: value}); validate();}}
           style={styles.submit_text}
           status={status.name}
           textStyle={styles.input_text}
@@ -105,7 +103,7 @@ function SignUp(props) {
         <Input
           placeholder="Correo"
           value={data.email}
-          onChangeText={value => setData({...data, email: value})}
+          onChangeText={value => {setData({...data, email: value}); validate()}}
           style={styles.submit_text}
           status={status.email}
           textStyle={styles.input_text}
@@ -113,7 +111,10 @@ function SignUp(props) {
         <Input
           placeholder="Contraseña"
           value={data.password}
-          onChangeText={value => setData({...data, password: value})}
+          onChangeText={value => {
+            setData({...data, password: value});
+            validate()
+          }}
           style={styles.submit_text}
           status={status.password}
           accessoryRight={renderIcon}
@@ -121,7 +122,7 @@ function SignUp(props) {
           textStyle={styles.input_text}
           caption="Debe contener minimo 8 caracteres, 1 numero, una letra mayuscula y minuscula."
         />
-        <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary'>
+        <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary' disabled={validated ? false : true}>
           Registrar
         </Button>
       </Card>
