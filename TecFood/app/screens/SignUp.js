@@ -12,64 +12,75 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import { Button, Card, Input, Icon } from '@ui-kitten/components'
+import { Button, Card, Input, Icon } from "@ui-kitten/components";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
-  const [status, setStatus] = useState({email: "basic", password: "basic", name: "basic"})
-  const [validated, setValidated] = useState(false)
+  const [status, setStatus] = useState({
+    email: "basic",
+    password: "basic",
+    name: "basic",
+  });
+  const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-
   const handleSubmit = () => {
-
-    if(validated) {
-      console.log("Los valores se validaron")
-      console.log(data)
+    if (validated) {
+      console.log("Los valores se validaron");
+      console.log(data);
     } else {
-      console.log("no esta validado")
-      console.log(status)
+      console.log("no esta validado");
+      console.log(status);
     }
-
   };
 
   const validate = () => {
-    const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm
-    const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi
+    const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
+    const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
 
     setValidated(true);
 
-    if(data.name === "") {
-      setStatus(prevState => { return {...prevState, name: "danger"}})
-      setValidated(false)
+    if (data.name === "") {
+      setStatus((prevState) => {
+        return { ...prevState, name: "danger" };
+      });
+      setValidated(false);
     } else {
-      setStatus(prevState => { return {...prevState, name: "success"}})
+      setStatus((prevState) => {
+        return { ...prevState, name: "success" };
+      });
     }
 
-    if(!passwordRegExp.test(data.password)) {      
-      setStatus(prevState => { return {...prevState, password: "danger"}})
-      setValidated(false)
+    if (!passwordRegExp.test(data.password)) {
+      setStatus((prevState) => {
+        return { ...prevState, password: "danger" };
+      });
+      setValidated(false);
     } else {
-      setStatus(prevState => { return {...prevState, password: "success"}})
+      setStatus((prevState) => {
+        return { ...prevState, password: "success" };
+      });
     }
 
-    if(!emailRegExp.test(data.email)) {
-      setStatus(prevState => { return {...prevState, email: "danger"}})
-      setValidated(false)
-
+    if (!emailRegExp.test(data.email)) {
+      setStatus((prevState) => {
+        return { ...prevState, email: "danger" };
+      });
+      setValidated(false);
     } else {
-      setStatus(prevState => { return {...prevState, email: "success"}})
+      setStatus((prevState) => {
+        return { ...prevState, email: "success" };
+      });
     }
-  }
+  };
 
-  
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
   const renderIcon = (props) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
-      <Icon {...props} name={secureTextEntry ? 'eye-off' : 'eye'}/>
+      <Icon {...props} name={secureTextEntry ? "eye-off" : "eye"} />
     </TouchableWithoutFeedback>
   );
 
@@ -95,8 +106,8 @@ function SignUp(props) {
         <Input
           placeholder="Nombre"
           value={data.name}
-          onChangeText={value => {
-            setData({...data, name: value});
+          onChangeText={(value) => {
+            setData({ ...data, name: value });
             validate();
           }}
           style={styles.submit_text}
@@ -106,9 +117,9 @@ function SignUp(props) {
         <Input
           placeholder="Correo"
           value={data.email}
-          onChangeText={value => {
-            setData({...data, email: value});
-            validate()
+          onChangeText={(value) => {
+            setData({ ...data, email: value });
+            validate();
           }}
           style={styles.submit_text}
           status={status.email}
@@ -117,9 +128,9 @@ function SignUp(props) {
         <Input
           placeholder="Contraseña"
           value={data.password}
-          onChangeText={value => {
-            setData({...data, password: value});
-            validate()
+          onChangeText={(value) => {
+            setData({ ...data, password: value });
+            validate();
           }}
           style={styles.submit_text}
           status={status.password}
@@ -128,7 +139,13 @@ function SignUp(props) {
           textStyle={styles.input_text}
           caption="Debe contener minimo 8 caracteres, 1 numero, una letra mayuscula y minuscula."
         />
-        <Button onPress={handleSubmit} style={styles.submit_button} status = 'primary' disabled={validated ? false : true}>
+        <Button
+          onPress={handleSubmit}
+          style={validated ? styles.submit_button : styles.disabled_button}
+          status="primary"
+          size="medium"
+          disabled={validated ? false : true}
+        >
           Registrar
         </Button>
       </Card>
@@ -180,16 +197,27 @@ const styles = StyleSheet.create({
   submit_button: {
     alignSelf: "center",
     alignItems: "center",
-    top: hp("2%"),
-    elevation: 12,
-    fontFamily: "OpenSans_Regular",
+    top: hp("1%"),
+    elevation: 20,
     fontSize: 20,
     borderRadius: 19,
+    fontFamily: "OpenSans_Regular",
     shadowColor: "#000",
-    shadowOffset: { width: 0,height: 10 },
+    shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.51,
     shadowRadius: 13.16,
-
+  },
+  disabled_button: {
+    alignSelf: "center",
+    alignItems: "center",
+    top: hp("1%"),
+    fontSize: 20,
+    borderRadius: 19,
+    fontFamily: "OpenSans_Regular",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.51,
+    shadowRadius: 13.16,
   },
   submit_text: {
     padding: "7%",
@@ -215,16 +243,16 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: wp("75%"),
     height: hp("50%"),
-    backgroundColor: '#f7fbfb',
+    backgroundColor: "#f7fbfb",
     borderRadius: 29,
-    shadowColor: '#dbebeb',
+    shadowColor: "#dbebeb",
     shadowOffset: { width: 24, height: 24 },
     shadowRadius: 42,
     elevation: 20,
   },
   input_text: {
     color: "#172A3A",
-  }
+  },
 });
 
 export default SignUp;
