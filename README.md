@@ -2,12 +2,12 @@
 App to provide a feasible food service for the all the campuses. 
 
 
-# Install project
+# Install Project
 
 ```sh
 npm install
 ```
-# Start project
+# Start Project
 
 ```sh
 npm start
