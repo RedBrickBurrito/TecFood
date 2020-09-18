@@ -1,4 +1,4 @@
-# TecFoods
+# TecFoods food ordering app
 App to provide a feasible food service for the all the campuses. 
 
 
