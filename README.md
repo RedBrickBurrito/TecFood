@@ -1,4 +1,4 @@
-# TecFoods food ordering app
+# TecFoods: food ordering app `:hamburger:`
 App to provide a feasible food service for the all the campuses. 
 
 
