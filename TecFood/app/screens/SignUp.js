@@ -13,6 +13,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
+import { registerUser } from '../../services/SignUpService'
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -26,8 +27,9 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      console.log("Los valores se validaron");
-      console.log(data);
+      // console.log("Los valores se validaron");
+      // console.log(data);
+      registerUser(data)
     } else {
       console.log("no esta validado");
       console.log(status);
