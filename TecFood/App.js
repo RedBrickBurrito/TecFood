@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import axios from "axios";
-import SignUp from "./app/screens/SignUp";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
-import * as eva from '@eva-design/eva';
-import { default as theme } from './custom-theme.json'; 
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { default as theme } from "./custom-theme.json";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import "react-native-gesture-handler";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import SignUp from "./app/screens/SignUp";
+import ProductPage from "./app/screens/ProductPage";
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
+
+const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   state = {
@@ -32,12 +39,18 @@ export default class App extends React.Component {
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-          <SignUp />
-        </ApplicationProvider>
-        </>
+        <NavigationContainer>
+          {
+            <>
+              <IconRegistry icons={EvaIconsPack} />
+              <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+                <Stack.Navigator headerMode="none">
+                  <Stack.Screen name="Sign Up" component={SignUp} />
+                </Stack.Navigator>
+              </ApplicationProvider>
+            </>
+          }
+        </NavigationContainer>
       );
     } else {
       return <AppLoading />;
