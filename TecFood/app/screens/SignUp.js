@@ -14,7 +14,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
+<<<<<<< HEAD
 import { registerUser } from "../../services/SignUpService";
+=======
+import { registerUser } from '../../services/SignUpService'
+import ProductPage from "./ProductPage";
+>>>>>>> 6ff5034... Modified SignUp for ProductPage testing & fixed ProductPage errors
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -25,7 +30,11 @@ function SignUp(props) {
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+<<<<<<< HEAD
   const mounted = useRef()
+=======
+  const [visible, setVisible] = useState(false);
+>>>>>>> 6ff5034... Modified SignUp for ProductPage testing & fixed ProductPage errors
 
   const handleSubmit = () => {
     if (validated) {
@@ -193,6 +202,17 @@ function SignUp(props) {
           Sign In
         </Text>
       </Text>
+
+
+      <Button
+        onPress={() => setVisible(true)}
+        style={styles.submit_button}
+        status="primary"
+        size="medium"
+      >
+        Toggle ProductPage Modal
+      </Button>
+      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
     </View>
   );
 }
