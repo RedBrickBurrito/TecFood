@@ -14,6 +14,7 @@ import {
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { registerUser } from '../../services/SignUpService'
+import ProductPage from "./ProductPage";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -24,6 +25,7 @@ function SignUp(props) {
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleSubmit = () => {
     if (validated) {
@@ -155,6 +157,17 @@ function SignUp(props) {
         ¿Ya tienes una cuenta?{" "}
         <Text style={styles.boldText}>Inicia sesión</Text>
       </Text>
+
+
+      <Button
+        onPress={() => setVisible(true)}
+        style={styles.submit_button}
+        status="primary"
+        size="medium"
+      >
+        Toggle ProductPage Modal
+      </Button>
+      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
     </View>
   );
 }

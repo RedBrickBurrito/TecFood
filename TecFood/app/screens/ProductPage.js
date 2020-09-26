@@ -8,9 +8,10 @@ import {
 import { handleProductRequest } from '../../services/ProductService'
 
 
-function ProductPage({product_id, visible, hide}) {
+function ProductPage(props) {
+    const { product_id, visible, hide } = props
 
-    const productData = handleProductRequest();
+    const productData = handleProductRequest(product_id);
 
     return (
         <Modal 
@@ -36,24 +37,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     card: {
-        position: 'absolute',
         alignSelf: 'center',
         width: wp('85%'),
-        height: hp('61.3%'),
-        top: hp('22.3%'),
-        borderRadius: '29px',
+        height: hp('75%'),
+        top: hp('8%'),
+        borderRadius: 29,
         backgroundColor: '#F7FBFB',
     },
     productImage: {
         width: '100%',
         height: '25%',
-        borderRadius: '29px',
+        borderRadius: 29,
     },
     content: {
         padding: '10%'
     },
     attributesTitle: {
-        fontFamily: 'Open Sans',
+        fontFamily: 'OpenSans_Regular',
         fontWeight: 'bold',
         fontSize: 18,
     },
