@@ -25,12 +25,9 @@ function SignUp(props) {
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [visible, setVisible] = useState(false);
 
   const handleSubmit = () => {
     if (validated) {
-      // console.log("Los valores se validaron");
-      // console.log(data);
       registerUser(data)
     } else {
       console.log("no esta validado");
@@ -105,7 +102,6 @@ function SignUp(props) {
         />
       </ImageBackground>
       <Text style={styles.header_text}>Registrarse</Text>
-
       <Card style={styles.card}>
         <Input
           placeholder="Nombre"
@@ -157,17 +153,6 @@ function SignUp(props) {
         ¿Ya tienes una cuenta?{" "}
         <Text style={styles.boldText}>Inicia sesión</Text>
       </Text>
-
-
-      <Button
-        onPress={() => setVisible(true)}
-        style={styles.submit_button}
-        status="primary"
-        size="medium"
-      >
-        Toggle ProductPage Modal
-      </Button>
-      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
     </View>
   );
 }
