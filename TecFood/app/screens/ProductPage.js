@@ -40,21 +40,21 @@ function ProductPage(props) {
                 <View style={styles.content}>
                     <Image source={{uri: imageUrl}} style={styles.productImage} resizeMode='cover'/>
                     <View style={styles.attributes}>
-                        <Text style={styles.title}>Seleccionar Miel</Text>
+                        <Text style={styles.title}>Select Honey</Text>
                         <View>
                             <CheckBox  
                                 checked={checkboxes.agave} 
                                 onChange={next => setCheckboxes({...checkboxes, agave: next})}
-                            >Miel de Agave</CheckBox>
+                            >Agave Syrup</CheckBox>
                             <CheckBox 
                                 checked={checkboxes.maple} 
                                 onChange={next => setCheckboxes({...checkboxes, maple: next})}
-                            >Miel de Maple</CheckBox>
+                            >Maple Syrup</CheckBox>
                         </View>
                         <Divider style={styles.divider}/>
-                        <Text style={styles.title}>Instrucciones Especiales</Text>
+                        <Text style={styles.title}>Special Instructions</Text>
                         <Input
-                            placeholder="Cervilletas extra, mas salsa..."
+                            placeholder="Extra napkins, sauce..."
                             value={special}
                             onChangeText={value => setSpecial(value)}
                             style={styles.input}
@@ -67,7 +67,7 @@ function ProductPage(props) {
                             <Text style={styles.qtyText}>{quantity}</Text>
                             <Button style={styles.qtyButton} onPress={() => handlePress('plus')} size='small'><Text style={styles.qtyButtonText}>+</Text></Button>
                         </View>
-                        <Button style={styles.addToCart} size='small'><Text style={styles.addToCartText}>Añadir al carrito</Text></Button>
+                        <Button style={styles.addToCart} size='small'><Text style={styles.addToCartText}>Add to Cart</Text></Button>
                     </View>
                 </View>
             </Card>
