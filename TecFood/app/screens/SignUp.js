@@ -31,10 +31,13 @@ function SignUp(props) {
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 <<<<<<< HEAD
+<<<<<<< HEAD
   const mounted = useRef()
 =======
   const [visible, setVisible] = useState(false);
 >>>>>>> 6ff5034... Modified SignUp for ProductPage testing & fixed ProductPage errors
+=======
+>>>>>>> 5957549... Finished ProductPage styling, restored SignUp
 
   const handleSubmit = () => {
     if (validated) {
@@ -145,8 +148,12 @@ function SignUp(props) {
           source={require("../assets/Tec_Foods_Logo.png")}
         />
       </ImageBackground>
+<<<<<<< HEAD
       <Text style={styles.header_text}>Sign Up</Text>
 
+=======
+      <Text style={styles.header_text}>Registrarse</Text>
+>>>>>>> 5957549... Finished ProductPage styling, restored SignUp
       <Card style={styles.card}>
         <Input
           placeholder="Full name"
@@ -202,17 +209,6 @@ function SignUp(props) {
           Sign In
         </Text>
       </Text>
-
-
-      <Button
-        onPress={() => setVisible(true)}
-        style={styles.submit_button}
-        status="primary"
-        size="medium"
-      >
-        Toggle ProductPage Modal
-      </Button>
-      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
     </View>
   );
 }
