@@ -13,7 +13,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
-import { registerUser } from '../../services/SignUpService'
+import { registerUser } from "../../services/SignUpService";
+import { NavigationContainer } from "@react-navigation/native";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -27,9 +28,8 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      // console.log("Los valores se validaron");
-      // console.log(data);
-      registerUser(data)
+      registerUser(data);
+      props.navigation.navigate("MenuPage");
     } else {
       console.log("no esta validado");
       console.log(status);
@@ -102,11 +102,11 @@ function SignUp(props) {
           source={require("../assets/Tec_Foods_Logo.png")}
         />
       </ImageBackground>
-      <Text style={styles.header_text}>Registrarse</Text>
+      <Text style={styles.header_text}>Sign Up</Text>
 
       <Card style={styles.card}>
         <Input
-          placeholder="Nombre"
+          placeholder="Full name"
           value={data.name}
           onChangeText={(value) => {
             setData({ ...data, name: value });
@@ -117,7 +117,7 @@ function SignUp(props) {
           textStyle={styles.input_text}
         />
         <Input
-          placeholder="Correo"
+          placeholder="Email"
           value={data.email}
           onChangeText={(value) => {
             setData({ ...data, email: value });
@@ -128,7 +128,7 @@ function SignUp(props) {
           textStyle={styles.input_text}
         />
         <Input
-          placeholder="Contraseña"
+          placeholder="Password"
           value={data.password}
           onChangeText={(value) => {
             setData({ ...data, password: value });
@@ -139,7 +139,7 @@ function SignUp(props) {
           accessoryRight={renderIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
-          caption="Debe contener minimo 8 caracteres, 1 numero, una letra mayuscula y minuscula."
+          caption="Must contain a minimun of 8 characters, 1 number, 1 Uppercase, 1 Lowercase."
         />
         <Button
           onPress={handleSubmit}
@@ -148,12 +148,11 @@ function SignUp(props) {
           size="medium"
           disabled={validated ? false : true}
         >
-          Registrar
+          Register
         </Button>
       </Card>
       <Text style={styles.mainText}>
-        ¿Ya tienes una cuenta?{" "}
-        <Text style={styles.boldText}>Inicia sesión</Text>
+        Already have an account? <Text style={styles.boldText}>Sign In</Text>
       </Text>
     </View>
   );

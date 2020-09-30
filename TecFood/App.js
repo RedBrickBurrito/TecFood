@@ -8,11 +8,11 @@ import * as eva from "@eva-design/eva";
 import { default as theme } from "./custom-theme.json";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import "react-native-gesture-handler";
-import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from "./app/screens/SignUp";
-import ProductPage from "./app/screens/ProductPage";
+import MenuPage from "./app/screens/MenuPage";
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
@@ -45,7 +45,8 @@ export default class App extends React.Component {
               <IconRegistry icons={EvaIconsPack} />
               <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
                 <Stack.Navigator headerMode="none">
-                  <Stack.Screen name="Sign Up" component={SignUp} />
+                  <Stack.Screen name="SignUp" component={SignUp} />
+                  <Stack.Screen name="MenuPage" component={MenuPage} />
                 </Stack.Navigator>
               </ApplicationProvider>
             </>
