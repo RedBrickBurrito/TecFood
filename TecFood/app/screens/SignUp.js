@@ -27,9 +27,11 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      // console.log("Los valores se validaron");
-      // console.log(data);
-      registerUser(data)
+      registerUser(data).then(response => {
+        console.log(response);
+      }).catch(error => {
+        console.log(error)
+      })
     } else {
       console.log("no esta validado");
       console.log(status);
