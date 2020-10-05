@@ -6,7 +6,7 @@ import {
   ImageBackground,
   StatusBar,
   Text,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, Alert
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -27,10 +27,23 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      registerUser(data).then(response => {
-        console.log(response);
+      registerUser(data).then(res => {
+        console.log(res);
+
+        if(res.status == '201') {
+          Alert.alert('Success', res.message, [
+            {text: 'Understood', onPress: () => console.log('navigate')}
+          ])
+        } else {
+          Alert.alert('Error', res.message, [
+            {text: 'Understood', onPress: () => console.log('need to retry') }
+          ])
+        }
       }).catch(error => {
         console.log(error)
+        Alert.alert('Error', error.message, [
+          {text: 'Understood', onPress: () => console.log('need to retry') }
+        ])
       })
     } else {
       console.log("no esta validado");

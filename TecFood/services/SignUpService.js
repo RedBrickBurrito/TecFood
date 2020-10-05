@@ -4,7 +4,11 @@ export async function registerUser(data) {
     console.log("Data received: ", data)
     
     return await axios.post('https://tfst1.herokuapp.com/customer/signup', data).then( response => {
-        return response.data.message
+        console.log('Response: ', response)
+        return {
+            status: response.status,
+            message: response.data.message
+        }
     }).catch(error => {
         if(error.response) {
             // Request made and server responded
