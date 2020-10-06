@@ -176,7 +176,13 @@ function SignUp(props) {
         </Button>
       </Card>
       <Text style={styles.mainText}>
-        ¿Already have an account? <Text style={styles.boldText}>Sign In</Text>
+        ¿Already have an account?{" "}
+        <Text
+          style={styles.boldText}
+          onPress={() => props.navigation.navigate("SignIn")}
+        >
+          Sign In
+        </Text>
       </Text>
     </View>
   );
