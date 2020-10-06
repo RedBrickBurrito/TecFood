@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Image,
@@ -25,6 +25,7 @@ function SignUp(props) {
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const mounted = useRef()
 
   const handleSubmit = () => {
     if (validated) {
@@ -110,6 +111,15 @@ function SignUp(props) {
     </TouchableWithoutFeedback>
   );
 
+  useEffect(() => {
+    if(mounted.current)
+      validate()
+  }, [data])
+
+  useEffect(() => {
+    mounted.current = true
+  }, [])
+
   return (
     <View style={styles.background}>
       <StatusBar
@@ -132,10 +142,7 @@ function SignUp(props) {
         <Input
           placeholder="Full name"
           value={data.name}
-          onChangeText={(value) => {
-            setData({ ...data, name: value });
-            validate();
-          }}
+          onChangeText={value => setData(prevState => ({...prevState, name: value}))}
           style={styles.submit_text}
           status={status.name}
           textStyle={styles.input_text}
@@ -143,10 +150,7 @@ function SignUp(props) {
         <Input
           placeholder="E-mail"
           value={data.email}
-          onChangeText={(value) => {
-            setData({ ...data, email: value });
-            validate();
-          }}
+          onChangeText={value => setData(prevState => ({...prevState, email: value}))}
           style={styles.submit_text}
           status={status.email}
           textStyle={styles.input_text}
@@ -154,10 +158,7 @@ function SignUp(props) {
         <Input
           placeholder="Password"
           value={data.password}
-          onChangeText={(value) => {
-            setData({ ...data, password: value });
-            validate();
-          }}
+          onChangeText={value => setData(prevState => ({...prevState, password: value}))}
           style={styles.submit_text}
           status={status.password}
           accessoryRight={renderIcon}
