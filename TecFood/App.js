@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useDeviceOrientation } from "@react-native-community/hooks";
 import axios from "axios";
-import SignUp from "./app/screens/SignUp";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components'
-import * as eva from '@eva-design/eva';
-import { default as theme } from './custom-theme.json'; 
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { default as theme } from "./custom-theme.json";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import SignUp from "./app/screens/SignUp";
+import SignIn from "./app/screens/SignIn";
+
+const Stack = createStackNavigator();
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
@@ -32,12 +38,19 @@ export default class App extends React.Component {
   render() {
     if (this.state.fontsLoaded) {
       return (
-        <>
-        <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-          <SignUp />
-        </ApplicationProvider>
-        </>
+        <NavigationContainer>
+          {
+            <>
+              <IconRegistry icons={EvaIconsPack} />
+              <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+                <Stack.Navigator headerMode="none">
+                  <Stack.Screen name="SignUp" component={SignUp} />
+                  <Stack.Screen name="SignIn" component={SignIn} />
+                </Stack.Navigator>
+              </ApplicationProvider>
+            </>
+          }
+        </NavigationContainer>
       );
     } else {
       return <AppLoading />;

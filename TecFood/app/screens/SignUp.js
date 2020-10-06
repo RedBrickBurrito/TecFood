@@ -6,14 +6,15 @@ import {
   ImageBackground,
   StatusBar,
   Text,
-  TouchableWithoutFeedback, Alert
+  TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
-import { registerUser } from '../../services/SignUpService'
+import { registerUser } from "../../services/SignUpService";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -27,26 +28,34 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      registerUser(data).then(res => {
-        console.log(res);
+      registerUser(data)
+        .then((res) => {
+          console.log(res);
 
-        if(res.status == '201') {
-          Alert.alert('Success', res.message, [
-            {text: 'Understood', onPress: () => console.log('navigate')}
-          ])
-        } else {
-          Alert.alert('Error', res.message, [
-            {text: 'Understood', onPress: () => console.log('need to retry') }
-          ])
-        }
-      }).catch(error => {
-        console.log(error)
-        Alert.alert('Error', error.message, [
-          {text: 'Understood', onPress: () => console.log('need to retry') }
-        ])
-      })
+          if (res.status == "201") {
+            Alert.alert("Success", res.message, [
+              {
+                text: "Understood",
+                onPress: () => props.navigation.navigate("SignIn"),
+              },
+            ]);
+          } else {
+            Alert.alert("Error", res.message, [
+              {
+                text: "Understood",
+                onPress: () => props.navigation.navigate("SignIn"),
+              },
+            ]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          Alert.alert("Error", error.message, [
+            { text: "Understood", onPress: () => console.log("need to retry") },
+          ]);
+        });
     } else {
-      console.log("no esta validado");
+      console.log("is not validated");
       console.log(status);
     }
   };
@@ -117,11 +126,11 @@ function SignUp(props) {
           source={require("../assets/Tec_Foods_Logo.png")}
         />
       </ImageBackground>
-      <Text style={styles.header_text}>Registrarse</Text>
+      <Text style={styles.header_text}>Sign Up</Text>
 
       <Card style={styles.card}>
         <Input
-          placeholder="Nombre"
+          placeholder="Full name"
           value={data.name}
           onChangeText={(value) => {
             setData({ ...data, name: value });
@@ -132,7 +141,7 @@ function SignUp(props) {
           textStyle={styles.input_text}
         />
         <Input
-          placeholder="Correo"
+          placeholder="E-mail"
           value={data.email}
           onChangeText={(value) => {
             setData({ ...data, email: value });
@@ -143,7 +152,7 @@ function SignUp(props) {
           textStyle={styles.input_text}
         />
         <Input
-          placeholder="Contraseña"
+          placeholder="Password"
           value={data.password}
           onChangeText={(value) => {
             setData({ ...data, password: value });
@@ -154,7 +163,7 @@ function SignUp(props) {
           accessoryRight={renderIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
-          caption="Debe contener minimo 8 caracteres, 1 numero, una letra mayuscula y minuscula."
+          caption="It must contain a minimum of 8 characters, 1 number, 1 uppercase and 1 lowercase letter."
         />
         <Button
           onPress={handleSubmit}
@@ -163,12 +172,11 @@ function SignUp(props) {
           size="medium"
           disabled={validated ? false : true}
         >
-          Registrar
+          Submit
         </Button>
       </Card>
       <Text style={styles.mainText}>
-        ¿Ya tienes una cuenta?{" "}
-        <Text style={styles.boldText}>Inicia sesión</Text>
+        ¿Already have an account? <Text style={styles.boldText}>Sign In</Text>
       </Text>
     </View>
   );
