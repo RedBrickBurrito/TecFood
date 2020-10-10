@@ -15,8 +15,9 @@ import {
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { loginHandler } from "../../services/LoginService";
+import { set } from "react-native-reanimated";
 
-function SignIn() {
+function SignIn(props) {
   const [data, setData] = useState({ email: "", password: "" });
   const [status, setStatus] = useState({
     email: "basic",
@@ -33,20 +34,19 @@ function SignIn() {
   };
   
   const validate = () => {
-    const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
 
     setValidated(true);
 
-    if (!passwordRegExp.test(data.password)) {
-      setStatus((prevState) => {
-        return { ...prevState, password: "danger" };
-      });
-      setValidated(false);
+    if(data.password == "") {
+      setStatus(prevState => {
+        return {...prevState, password: "danger"}
+      })
+      setValidated(false)
     } else {
-      setStatus((prevState) => {
-        return { ...prevState, password: "success" };
-      });
+      setStatus(prevState => {
+        return {...prevState, password: "success"}
+      })
     }
 
     if (!emailRegExp.test(data.email)) {
@@ -96,17 +96,9 @@ function SignIn() {
           source={require("../assets/Tec_Foods_Logo.png")}
         />
       </ImageBackground>
-      <Text style={styles.header_text}>Sign Up</Text>
+      <Text style={styles.header_text}>Sign In</Text>
 
       <Card style={styles.card}>
-        <Input
-          placeholder="Full name"
-          value={data.name}
-          onChangeText={value => setData(prevState => ({...prevState, name: value}))}
-          style={styles.submit_text}
-          status={status.name}
-          textStyle={styles.input_text}
-        />
         <Input
           placeholder="E-mail"
           value={data.email}
@@ -124,7 +116,6 @@ function SignIn() {
           accessoryRight={renderIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
-          caption="It must contain a minimum of 8 characters, 1 number, 1 uppercase and 1 lowercase letter."
         />
         <Button
           onPress={handleSubmit}
@@ -137,12 +128,12 @@ function SignIn() {
         </Button>
       </Card>
       <Text style={styles.mainText}>
-        ¿Already have an account?{" "}
+        Don't have an account?{" "}
         <Text
           style={styles.boldText}
-          onPress={() => props.navigation.navigate("SignIn")}
+          onPress={() => props.navigation.navigate("SignUp")}
         >
-          Sign In
+          Sign Up
         </Text>
       </Text>
     </View>
@@ -234,13 +225,14 @@ const styles = StyleSheet.create({
   card: {
     alignSelf: "center",
     width: wp("75%"),
-    height: hp("50%"),
+    height: hp("40%"),
     backgroundColor: "#f7fbfb",
     borderRadius: 29,
     shadowColor: "#dbebeb",
     shadowOffset: { width: 24, height: 24 },
     shadowRadius: 42,
     elevation: 20,
+    justifyContent: 'center',
   },
   input_text: {
     color: "#172A3A",
