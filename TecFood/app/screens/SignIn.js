@@ -29,7 +29,11 @@ function SignIn(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      loginHandler(data) // need a callback when backend is finished
+      loginHandler(data).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log(error)
+      }) // need a callback when backend is finished
     }
   };
   
