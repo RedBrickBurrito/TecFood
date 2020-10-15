@@ -13,6 +13,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SignUp from "./app/screens/SignUp";
 import SignIn from "./app/screens/SignIn";
 import MainScreen from "./app/screens/MainScreen";
+import ProductPage from "./app/screens/ProductPage";
+import MenuPage from "./app/screens/MenuPage";
+import SignIn from "./app/screens/SignIn";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +51,8 @@ export default class App extends React.Component {
                   <Stack.Screen name="SignUp" component={SignUp} />
                   <Stack.Screen name="SignIn" component={SignIn} />
                   <Stack.Screen name="Main" component={MainScreen} />
+                  <Stack.Screen name="MenuPage" component={MenuPage} />
+                  <Stack.Screen name="ProductPage" component={ProductPage} />
                 </Stack.Navigator>
               </ApplicationProvider>
             </>
