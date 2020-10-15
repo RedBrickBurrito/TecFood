@@ -14,14 +14,14 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
-import { registerUser } from "../../services/SignUpService";
+import { loginHandler } from "../../services/LoginService";
+import { set } from "react-native-reanimated";
 
-function SignUp(props) {
-  const [data, setData] = useState({ name: "", email: "", password: "" });
+function SignIn(props) {
+  const [data, setData] = useState({ email: "", password: "" });
   const [status, setStatus] = useState({
     email: "basic",
     password: "basic",
-    name: "basic",
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -29,56 +29,22 @@ function SignUp(props) {
 
   const handleSubmit = () => {
     if (validated) {
-      registerUser(data)
-        .then((res) => {
-          console.log(res);
-
-          if (res.status == "201") {
-            Alert.alert("Success", res.message, [
-              {
-                text: "Understood",
-                onPress: () => props.navigation.navigate("SignIn"),
-              },
-            ]);
-          } else {
-            Alert.alert("Error", res.message, [
-              {
-                text: "Understood",
-                onPress: () => props.navigation.navigate("SignIn"),
-              },
-            ]);
-          }
+      loginHandler(data)
+        .then((response) => {
+          console.log(response);
         })
         .catch((error) => {
           console.log(error);
-          Alert.alert("Error", error.message, [
-            { text: "Understood", onPress: () => console.log("need to retry") },
-          ]);
-        });
-    } else {
-      console.log("is not validated");
-      console.log(status);
+        }); // need a callback when backend is finished
     }
   };
 
   const validate = () => {
-    const passwordRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm;
     const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
 
     setValidated(true);
 
-    if (data.name === "") {
-      setStatus((prevState) => {
-        return { ...prevState, name: "danger" };
-      });
-      setValidated(false);
-    } else {
-      setStatus((prevState) => {
-        return { ...prevState, name: "success" };
-      });
-    }
-
-    if (!passwordRegExp.test(data.password)) {
+    if (data.password == "") {
       setStatus((prevState) => {
         return { ...prevState, password: "danger" };
       });
@@ -135,19 +101,9 @@ function SignUp(props) {
           source={require("../assets/Tec_Foods_Logo.png")}
         />
       </ImageBackground>
-      <Text style={styles.header_text}>Sign Up</Text>
+      <Text style={styles.header_text}>Sign In</Text>
 
       <Card style={styles.card}>
-        <Input
-          placeholder="Full name"
-          value={data.name}
-          onChangeText={(value) =>
-            setData((prevState) => ({ ...prevState, name: value }))
-          }
-          style={styles.submit_text}
-          status={status.name}
-          textStyle={styles.input_text}
-        />
         <Input
           placeholder="E-mail"
           value={data.email}
@@ -169,10 +125,9 @@ function SignUp(props) {
           accessoryRight={renderIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
-          caption="It must contain a minimum of 8 characters, 1 number, 1 uppercase and 1 lowercase letter."
         />
         <Button
-          onPress={handleSubmit}
+          onPress={(handleSubmit, () => props.navigation.navigate("MenuPage"))}
           style={validated ? styles.submit_button : styles.disabled_button}
           status="primary"
           size="medium"
@@ -182,12 +137,12 @@ function SignUp(props) {
         </Button>
       </Card>
       <Text style={styles.mainText}>
-        ¿Already have an account?{" "}
+        Don't have an account?{" "}
         <Text
           style={styles.boldText}
-          onPress={() => props.navigation.navigate("SignIn")}
+          onPress={() => props.navigation.navigate("SignUp")}
         >
-          Sign In
+          Sign Up
         </Text>
       </Text>
     </View>
@@ -230,6 +185,7 @@ const styles = StyleSheet.create({
     fontFamily: "OpenSans_Regular",
     fontSize: 12,
     fontWeight: "400",
+    top: "81%",
   },
   submit_button: {
     alignSelf: "center",
@@ -279,17 +235,18 @@ const styles = StyleSheet.create({
   card: {
     alignSelf: "center",
     width: wp("75%"),
-    height: hp("50%"),
+    height: hp("40%"),
     backgroundColor: "#f7fbfb",
     borderRadius: 29,
     shadowColor: "#dbebeb",
     shadowOffset: { width: 24, height: 24 },
     shadowRadius: 42,
     elevation: 20,
+    justifyContent: "center",
   },
   input_text: {
     color: "#172A3A",
   },
 });
 
-export default SignUp;
+export default SignIn;

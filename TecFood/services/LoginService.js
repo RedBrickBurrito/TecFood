@@ -1,16 +1,11 @@
 import axios from "axios";
 
-export async function registerUser(data) {
+export async function loginHandler(data) {
   console.log("Data received: ", data);
-
   return await axios
-    .post("https://tfst1.herokuapp.com/customer/signup", data)
+    .post("https://tfst1.herokuapp.com/customer/login")
     .then((response) => {
-      console.log("Response: ", response);
-      return {
-        status: response.status,
-        message: response.data.message,
-      };
+      console.log(response);
     })
     .catch((error) => {
       if (error.response) {

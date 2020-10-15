@@ -13,6 +13,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from "./app/screens/SignUp";
 import ProductPage from "./app/screens/ProductPage";
+import MenuPage from "./app/screens/MenuPage";
+import SignIn from "./app/screens/SignIn";
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
@@ -45,7 +47,10 @@ export default class App extends React.Component {
               <IconRegistry icons={EvaIconsPack} />
               <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
                 <Stack.Navigator headerMode="none">
-                  <Stack.Screen name="Sign Up" component={SignUp} />
+                  <Stack.Screen name="SignUp" component={SignUp} />
+                  <Stack.Screen name="SignIn" component={SignIn} />
+                  <Stack.Screen name="MenuPage" component={MenuPage} />
+                  <Stack.Screen name="ProductPage" component={ProductPage} />
                 </Stack.Navigator>
               </ApplicationProvider>
             </>
