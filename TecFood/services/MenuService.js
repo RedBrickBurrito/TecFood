@@ -1,14 +1,14 @@
 import axios from 'axios'
 
-export async function handleProductRequest(restaurantID, itemID) {
-    const route = `https://tecfood.herokuapp.com/api/restaurant/${restaurantID}/item/${itemID}`
+export async function menuHandler(restaurantID) {
+    const route = `https://tecfood.herokuapp.com/api/restaurant/${restaurantID}/item`
     // console.log(`Retrieving product data of product with id ${itemID} to the route ${route}`)
 
     return await axios.get(route)
         .then(response => {
             return {
                 status: response.status,
-                product: response.data,
+                menu: response.data,
             }
         })
         .catch(error => {
