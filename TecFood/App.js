@@ -25,6 +25,8 @@ let customFonts = {
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
 
+const Stack = createStackNavigator();
+
 export default class App extends React.Component {
   state = {
     fontsLoaded: false,
