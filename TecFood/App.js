@@ -15,7 +15,6 @@ import SignIn from "./app/screens/SignIn";
 import MainScreen from "./app/screens/MainScreen";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
-import SignIn from "./app/screens/SignIn";
 
 const Stack = createStackNavigator();
 
@@ -24,8 +23,6 @@ let customFonts = {
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
-
-const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   state = {

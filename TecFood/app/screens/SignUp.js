@@ -15,7 +15,6 @@ import {
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { registerUser } from "../../services/SignUpService";
-import { menuHandler } from "../../services/MenuService";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -27,18 +26,6 @@ function SignUp(props) {
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const mounted = useRef()
-
-  const requestMenu = () => {
-    menuHandler("5f793f88c132f3157f850e38").then(response => {
-      // response.menu.forEach(item => {
-      //   return(
-      //     <Card key={item.id}>
-      //       <Text>{item.description}</Text>
-      //     </Card>
-      //   )
-      // });
-    })
-  }
 
   const handleSubmit = () => {
     if (validated) {
@@ -151,7 +138,6 @@ function SignUp(props) {
       <Text style={styles.header_text}>Sign Up</Text>
 
       <Card style={styles.card}>
-        {requestMenu}
         <Input
           placeholder="Full name"
           value={data.name}
@@ -203,14 +189,6 @@ function SignUp(props) {
           Go To Main Screen
         </Button>
       </Card>
-      <Button
-          onPress={requestMenu}
-          style={styles.submit_button}
-          status="primary"
-          size="medium"
-        >
-          Submit
-        </Button>
       <Text style={styles.mainText}>
         ¿Already have an account?{" "}
         <Text
@@ -220,17 +198,6 @@ function SignUp(props) {
           Sign In
         </Text>
       </Text>
-
-
-      <Button
-        onPress={() => setVisible(true)}
-        style={styles.submit_button}
-        status="primary"
-        size="medium"
-      >
-        Toggle ProductPage Modal
-      </Button>
-      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
     </View>
   );
 }
