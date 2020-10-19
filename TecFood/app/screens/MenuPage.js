@@ -1,12 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   SafeAreaView,
-  View,
-  ScrollView,
   Image,
   Platform,
-  Dimensions,
   StatusBar,
   ImageBackground,
 } from "react-native";
@@ -15,9 +12,7 @@ import {
   BottomNavigationTab,
   Icon,
   Card,
-  List,
   Text,
-  TopNavigation,
   Button,
   Layout,
 } from "@ui-kitten/components";
@@ -32,24 +27,32 @@ import HeaderImageScrollView, {
 import Animated, { color } from "react-native-reanimated";
 import ProductPage from "./ProductPage";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
-
-const shoppingCartIcon = (props) => (
-  <Icon {...props} name="shopping-cart-outline" />
-);
-
-const homeIcon = (props) => <Icon {...props} name="home-outline" />;
-
-const userIcon = (props) => <Icon {...props} name="person-outline" />;
+import axios from "axios";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
-export const MenuPage = (props) => {
+export const MenuPage = ({ route, navigation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
 
   const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 75;
   const MAX_HEIGHT = 250;
-  const { navigation } = props;
+
+  const { restaurantId, restaurantName } = route.params;
+  const [items, getItems] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(
+        "https://tecfood.herokuapp.com/api/restaurant/" + restaurantId + "/item"
+      )
+      .then((response) => {
+        const filteredItems = response.data.filter((item) => {
+          return item.availability;
+        });
+        getItems(filteredItems);
+      });
+  }, []);
 
   return (
     <SafeAreaView style={styles.background}>
@@ -84,9 +87,10 @@ export const MenuPage = (props) => {
                 status="control"
                 size="large"
                 accessoryLeft={backIcon}
+                onPress={() => navigation.navigate("Main")}
               />
               <Text style={styles.restaurantTitle}>
-                Restaurant "The Hungry Hippo"
+                Restaurant {restaurantName}
               </Text>
             </Layout>
           </Animated.View>
@@ -102,6 +106,20 @@ export const MenuPage = (props) => {
             elevation: 20,
           }}
         >
+          {items.map((item) => {
+            return (
+              <Card style={styles.card} key={item._id}>
+                <ImageBackground
+                  style={styles.product_photo}
+                  source={{ uri: item.image }}
+                >
+                  <Text style={styles.product_Title}>{item.name}</Text>
+                  <Text style={styles.product_Text}>{item.description}</Text>
+                  <Text style={styles.product_price}>$ {item.price}</Text>
+                </ImageBackground>
+              </Card>
+            );
+          })}
           <Card style={styles.card} onPress={() => setVisible(true)}>
             <ProductPage
               product_id={1}
@@ -112,56 +130,16 @@ export const MenuPage = (props) => {
               style={styles.product_photo}
               source={require("../assets/R_Option1.jpg")}
             >
-              <Text style={styles.product_Title}>Blueberry Pancakes</Text>
-              <Text style={styles.product_Text}>
-                Delicious blueberry pancakes accompanied with honey of your
-                choice.
-              </Text>
-              <Text style={styles.product_price}>$150</Text>
+              <Text>{restaurantId}</Text>
             </ImageBackground>
-          </Card>
-          <Card style={styles.card}>
-            <Image
-              style={styles.product_photo}
-              source={require("../assets/R_Option1.jpg")}
-            />
-          </Card>
-          <Card style={styles.card}>
-            <Image
-              style={styles.product_photo}
-              source={require("../assets/R_Option1.jpg")}
-            />
-          </Card>
-          <Card style={styles.card}>
-            <Image
-              style={styles.product_photo}
-              source={require("../assets/R_Option1.jpg")}
-            />
           </Card>
         </TriggeringView>
       </HeaderImageScrollView>
-      <BottomNavigation
-        selectedIndex={selectedIndex}
-        onSelect={(index) => setSelectedIndex(index)}
-        style={(styles.bottomNavigation, styles.shadow)}
-      >
-        <BottomNavigationTab icon={userIcon} title="User" />
-        <BottomNavigationTab icon={homeIcon} title="Home" />
-        <BottomNavigationTab icon={shoppingCartIcon} title="Cart" />
-      </BottomNavigation>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  bottomNavigation: {
-    marginTop: 20,
-    position: "absolute",
-    bottom: 0,
-    elevation: 20,
-    backgroundColor: "#f7fbfb",
-    borderColor: "#9FBEB6",
-  },
   restaurantTitle: {
     color: "#f9fefe",
     fontFamily: "OpenSans_Bold",
@@ -182,7 +160,7 @@ const styles = StyleSheet.create({
     width: wp("81%"),
     height: hp("22%"),
     flex: 1,
-    top: "10%",
+    top: "1%",
     backgroundColor: "#f7fbfb",
     borderRadius: 29,
     shadowColor: "#dbebeb",

@@ -16,6 +16,7 @@ import {
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { registerUser } from "../../services/SignUpService";
 import { menuHandler } from "../../services/MenuService";
+import ProductPage from "./ProductPage";
 
 function SignUp(props) {
   const [data, setData] = useState({ name: "", email: "", password: "" });
@@ -26,19 +27,20 @@ function SignUp(props) {
   });
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const mounted = useRef()
+  const mounted = useRef();
+  const [visible, setVisible] = useState(false);
 
   const requestMenu = () => {
-    menuHandler("5f793f88c132f3157f850e38").then(response => {
-      // response.menu.forEach(item => {
-      //   return(
-      //     <Card key={item.id}>
-      //       <Text>{item.description}</Text>
-      //     </Card>
-      //   )
-      // });
-    })
-  }
+    menuHandler("5f793f88c132f3157f850e38").then((response) => {
+      response.menu.forEach((item) => {
+        return (
+          <Card key={item.id}>
+            <Text>{item.description}</Text>
+          </Card>
+        );
+      });
+    });
+  };
 
   const handleSubmit = () => {
     if (validated) {
@@ -204,13 +206,13 @@ function SignUp(props) {
         </Button>
       </Card>
       <Button
-          onPress={requestMenu}
-          style={styles.submit_button}
-          status="primary"
-          size="medium"
-        >
-          Submit
-        </Button>
+        onPress={requestMenu}
+        style={styles.submit_button}
+        status="primary"
+        size="medium"
+      >
+        Submit
+      </Button>
       <Text style={styles.mainText}>
         ¿Already have an account?{" "}
         <Text
@@ -220,17 +222,11 @@ function SignUp(props) {
           Sign In
         </Text>
       </Text>
-
-
-      <Button
-        onPress={() => setVisible(true)}
-        style={styles.submit_button}
-        status="primary"
-        size="medium"
-      >
-        Toggle ProductPage Modal
-      </Button>
-      <ProductPage product_id={1} visible={visible} hide={() => setVisible(false)}/>
+      <ProductPage
+        product_id={1}
+        visible={visible}
+        hide={() => setVisible(false)}
+      />
     </View>
   );
 }

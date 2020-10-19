@@ -15,9 +15,6 @@ import SignIn from "./app/screens/SignIn";
 import MainScreen from "./app/screens/MainScreen";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
-import SignIn from "./app/screens/SignIn";
-
-const Stack = createStackNavigator();
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),

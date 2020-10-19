@@ -133,10 +133,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
+    top: "10%",
     borderRadius: 29,
     backgroundColor: "#F7FBFB",
     height: "80%",
-    paddingBottom: "60%",
+    paddingBottom: "70%",
   },
   content: {
     width: width * 0.7,
@@ -180,12 +181,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   qtyButton: {
-    borderColor: "black",
-    backgroundColor: "white",
+    backgroundColor: "#ffffff",
     borderRadius: 30,
     height: "100%",
     width: "16%",
     marginBottom: "2%",
+    borderWidth: 0,
+    elevation: 8,
   },
   qtyButtonText: {
     color: "black",
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addToCart: {
-    marginTop: "18%",
+    marginTop: "25%",
     alignSelf: "center",
     borderRadius: 29,
     width: "70%",
