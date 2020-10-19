@@ -16,13 +16,13 @@ import MainScreen from "./app/screens/MainScreen";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
 
+const Stack = createStackNavigator();
+
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
   OpenSans_Regular: require("./app/assets/fonts/OpenSans-Regular.ttf"),
   OpenSans_Bold: require("./app/assets/fonts/OpenSans-Bold.ttf"),
 };
-
-const Stack = createStackNavigator();
 
 export default class App extends React.Component {
   state = {
