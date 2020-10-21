@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -15,6 +15,7 @@ import {
   Text,
   Button,
   Layout,
+  Modal,
 } from "@ui-kitten/components";
 import { LinearGradient } from "expo";
 import {
@@ -34,12 +35,23 @@ const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 export const MenuPage = ({ route, navigation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState({})
+  const mounted = useRef();
 
   const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 75;
   const MAX_HEIGHT = 250;
 
-  const { restaurantId, restaurantName } = route.params;
+  const { restaurantId, restaurantName } = route.params.restaurant;
   const [items, getItems] = useState([]);
+
+  const handleProductClick = (item) => {
+    setSelectedProduct(item);
+  };
+
+  useEffect(() => {
+    if(mounted.current)
+      setVisible(true);
+  }, [selectedProduct]);
 
   useEffect(() => {
     axios
@@ -52,6 +64,7 @@ export const MenuPage = ({ route, navigation }) => {
         });
         getItems(filteredItems);
       });
+      mounted.current = true;
   }, []);
 
   return (
@@ -108,33 +121,27 @@ export const MenuPage = ({ route, navigation }) => {
         >
           {items.map((item) => {
             return (
-              <Card style={styles.card} key={item._id}>
+              <Card style={styles.card} key={item._id} onPress={() => handleProductClick(item)}>
                 <ImageBackground
                   style={styles.product_photo}
-                  source={{ uri: item.image }}
+                  source={item.image !== "" ? { uri: item.image } : null}
                 >
                   <Text style={styles.product_Title}>{item.name}</Text>
                   <Text style={styles.product_Text}>{item.description}</Text>
-                  <Text style={styles.product_price}>$ {item.price}</Text>
+                  <Text style={styles.product_price}>$ {item.price / 100}</Text>
                 </ImageBackground>
               </Card>
             );
           })}
-          <Card style={styles.card} onPress={() => setVisible(true)}>
-            <ProductPage
-              product_id={1}
-              visible={visible}
-              hide={() => setVisible(false)}
-            />
-            <ImageBackground
-              style={styles.product_photo}
-              source={require("../assets/R_Option1.jpg")}
-            >
-              <Text>{restaurantId}</Text>
-            </ImageBackground>
-          </Card>
         </TriggeringView>
       </HeaderImageScrollView>
+      <Modal
+        visible={visible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setVisible(false)}
+      >
+        <ProductPage product={selectedProduct} />
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -225,6 +232,10 @@ const styles = StyleSheet.create({
     top: hp("5.5%"),
     color: "#3F5CFF",
   },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    flex: 1,
+  }
 });
 
 export default MenuPage;
