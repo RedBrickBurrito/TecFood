@@ -7,17 +7,7 @@ import {
   StatusBar,
   ImageBackground,
 } from "react-native";
-import {
-  BottomNavigation,
-  BottomNavigationTab,
-  Icon,
-  Card,
-  Text,
-  Button,
-  Layout,
-  Modal,
-} from "@ui-kitten/components";
-import { LinearGradient } from "expo";
+import { Icon, Card, Text, Button, Layout, Modal } from "@ui-kitten/components";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -27,21 +17,18 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 import Animated, { color } from "react-native-reanimated";
 import ProductPage from "./ProductPage";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import axios from "axios";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
 export const MenuPage = ({ route, navigation }) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState({})
+  const [selectedProduct, setSelectedProduct] = React.useState({});
   const mounted = useRef();
 
-  const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 75;
   const MAX_HEIGHT = 250;
 
-  const { restaurantId, restaurantName } = route.params.restaurant;
+  const { restaurantId, restaurantName } = route.params;
   const [items, getItems] = useState([]);
 
   const handleProductClick = (item) => {
@@ -49,8 +36,7 @@ export const MenuPage = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    if(mounted.current)
-      setVisible(true);
+    if (mounted.current) setVisible(true);
   }, [selectedProduct]);
 
   useEffect(() => {
@@ -64,7 +50,7 @@ export const MenuPage = ({ route, navigation }) => {
         });
         getItems(filteredItems);
       });
-      mounted.current = true;
+    mounted.current = true;
   }, []);
 
   return (
@@ -121,10 +107,19 @@ export const MenuPage = ({ route, navigation }) => {
         >
           {items.map((item) => {
             return (
-              <Card style={styles.card} key={item._id} onPress={() => handleProductClick(item)}>
+              <Card
+                style={styles.card}
+                key={item._id}
+                onPress={() => handleProductClick(item)}
+              >
                 <ImageBackground
                   style={styles.product_photo}
-                  source={item.image !== "" ? { uri: item.image } : null}
+                  //item.image !== "" ? { uri: item.image } : null
+                  source={
+                    item.image !== ""
+                      ? { uri: item.image }
+                      : require("../assets/R_Option1.jpg")
+                  }
                 >
                   <Text style={styles.product_Title}>{item.name}</Text>
                   <Text style={styles.product_Text}>{item.description}</Text>
@@ -235,7 +230,7 @@ const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     flex: 1,
-  }
+  },
 });
 
 export default MenuPage;

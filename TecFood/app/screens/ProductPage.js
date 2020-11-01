@@ -1,26 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Image,
   StyleSheet,
   View,
   Text,
   Dimensions,
   ScrollView,
   ImageBackground,
-  BackHandler,
 } from "react-native";
 import {
   Card,
   CheckBox,
   Divider,
   Input,
-  Modal,
   Button,
+  Icon,
+  Layout,
 } from "@ui-kitten/components";
+import MenuPage from "./MenuPage";
 
 const { height, width } = Dimensions.get("window");
+const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage(props) {
+function ProductPage(props, { navigation }) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
@@ -37,74 +38,68 @@ function ProductPage(props) {
       setQuantity(quantity + 1);
     }
   };
-  
+
   return (
     <Card style={styles.card} appearance="filled">
-      <View style={styles.content}>
-        <Image
-          source={product.image !== "" ? { uri: product.image } : null}
-          style={styles.productImage}
-          resizeMode="cover"
+      <ImageBackground
+        source={product.image !== "" ? { uri: product.image } : null}
+        style={styles.productImage}
+        resizeMode="cover"
+      >
+        <Layout style={styles.buttonContainer}>
+          <Button
+            onPress={() => this.props.setVisible(false)}
+            size="giant"
+            status="control"
+            accessoryRight={closeIcon}
+            appearance="ghost"
+          ></Button>
+        </Layout>
+      </ImageBackground>
+      <ScrollView style={{ width: "100%", height: "100%" }}>
+        <Text style={styles.title}>{product.name}</Text>
+        {product.includedSides.map((side) => {
+          return (
+            <CheckBox
+              key={side}
+              checked={checkboxes.side}
+              onChange={(next) => setCheckboxes({ ...checkboxes, side: next })}
+              style={{ marginBottom: "3%" }}
+            >
+              {side}
+            </CheckBox>
+          );
+        })}
+        <Divider style={styles.divider} />
+        <Text style={styles.title}>Special Instructions</Text>
+        <Input
+          placeholder="Extra napkins, sauce..."
+          value={special}
+          style={styles.input}
+          textStyle={styles.inputText}
+          onChangeText={(value) => setSpecial(value)}
         />
-        <ScrollView>
-          <View style={styles.attributes}>
-            <Text style={styles.title}>{product.name}</Text>
-            <View>
-              {product.includedSides.map(side => {
-                return (
-                  <CheckBox
-                    key={side}
-                    checked={checkboxes.side}
-                    onChange={(next) =>
-                      setCheckboxes({ ...checkboxes, side: next })
-                    }
-                    style={{ marginBottom: "3%" }}
-                  >
-                    {side}
-                  </CheckBox>
-                )
-              })}
-            </View>
-            <Divider style={styles.divider} />
-            <Text style={styles.title}>Special Instructions</Text>
-            <Input
-              placeholder="Extra napkins, sauce..."
-              value={special}
-              style={styles.input}
-              textStyle={styles.inputText}
-              onChangeText={value => setSpecial(value)}
-            />
-          </View>
-          <View
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              height: "20%",
-            }}
+        <View style={styles.quantity}>
+          <Button
+            style={styles.qtyButton}
+            onPress={() => handlePress("minus")}
+            size="small"
           >
-            <View style={styles.quantity}>
-              <Button
-                style={styles.qtyButton}
-                onPress={() => handlePress("minus")}
-                size="small"
-              >
-                <Text style={styles.qtyButtonText}>-</Text>
-              </Button>
-              <Text style={styles.qtyText}>{quantity}</Text>
-              <Button
-                style={styles.qtyButton}
-                onPress={() => handlePress("plus")}
-                size="small"
-              >
-                <Text style={styles.qtyButtonText}>+</Text>
-              </Button>
-            </View>
-            <Button style={styles.addToCart} size="small">
-              <Text style={styles.addToCartText}>Add to Cart (${(product.price / 100) * quantity})</Text>
-            </Button>
-          </View>
-        </ScrollView>
-      </View>
+            <Text style={styles.qtyButtonText}>-</Text>
+          </Button>
+          <Text style={styles.qtyText}>{quantity}</Text>
+          <Button
+            style={styles.qtyButton}
+            onPress={() => handlePress("plus")}
+            size="small"
+          >
+            <Text style={styles.qtyButtonText}>+</Text>
+          </Button>
+        </View>
+        <Button style={styles.addToCart} size="medium">
+          <Text>Add to Cart (${(product.price / 100) * quantity})</Text>
+        </Button>
+      </ScrollView>
     </Card>
   );
 }
@@ -114,20 +109,15 @@ const styles = StyleSheet.create({
     top: "10%",
     borderRadius: 29,
     backgroundColor: "#F7FBFB",
-    height: "80%",
-    paddingBottom: "70%",
-  },
-  content: {
-    width: width * 0.7,
-    justifyContent: "space-between",
-    bottom: "5%",
+    height: "100%",
+    width: "80%",
+    alignSelf: "center",
   },
   productImage: {
     alignSelf: "center",
-    width: width * 0.85,
-    height: "35%",
-    borderRadius: 29,
-    marginBottom: "15%",
+    width: width * 0.8,
+    height: height * 0.15,
+    borderBottomEndRadius: 29,
   },
   attributes: {
     justifyContent: "space-evenly",
@@ -162,10 +152,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 30,
     height: "100%",
-    width: "16%",
+    width: "17%",
     marginBottom: "2%",
     borderWidth: 0,
     elevation: 8,
+    alignItems: "center",
   },
   qtyButtonText: {
     color: "black",
@@ -176,14 +167,27 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addToCart: {
+    alignSelf: "center",
+    alignItems: "center",
     marginTop: "25%",
     alignSelf: "center",
-    borderRadius: 29,
-    width: "70%",
+    borderRadius: 19,
+    fontFamily: "OpenSans_Regular",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.51,
+    shadowRadius: 13.16,
+    elevation: 20,
+    fontSize: 20,
+    marginTop: "30%",
     bottom: "15%",
   },
-  addToCartText: {
-    fontSize: 18,
+  buttonContainer: {
+    flexDirection: "row",
+    backgroundColor: "rgba(52, 52, 52, 0)",
+    alignSelf: "flex-end",
+    top: "-5%",
+    marginRight: "3%",
   },
 });
 

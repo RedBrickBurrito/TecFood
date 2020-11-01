@@ -6,7 +6,7 @@ import {
   Icon,
 } from "@ui-kitten/components";
 import Axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import axios from "axios";
 import { PropsService } from "@ui-kitten/components/devsupport";
@@ -22,6 +22,7 @@ const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 function MainScreen(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const componentIsMounted = useRef(true);
 
   useEffect(() => {
     axios
@@ -31,6 +32,7 @@ function MainScreen(props) {
           return restaurant.availability;
         });
         setRestaurants(filteredRestaurants);
+        componentIsMounted.current = false;
       });
   }, []);
 
