@@ -35,13 +35,13 @@ const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 export const MenuPage = ({ route, navigation }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState({})
+  const [selectedProduct, setSelectedProduct] = React.useState({});
   const mounted = useRef();
 
   const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 75;
   const MAX_HEIGHT = 250;
 
-  const { restaurantId, restaurantName } = route.params.restaurant;
+  const { restaurantId, restaurantName } = route.params;
   const [items, getItems] = useState([]);
 
   const handleProductClick = (item) => {
@@ -49,8 +49,7 @@ export const MenuPage = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    if(mounted.current)
-      setVisible(true);
+    if (mounted.current) setVisible(true);
   }, [selectedProduct]);
 
   useEffect(() => {
@@ -64,7 +63,7 @@ export const MenuPage = ({ route, navigation }) => {
         });
         getItems(filteredItems);
       });
-      mounted.current = true;
+    mounted.current = true;
   }, []);
 
   return (
@@ -121,7 +120,11 @@ export const MenuPage = ({ route, navigation }) => {
         >
           {items.map((item) => {
             return (
-              <Card style={styles.card} key={item._id} onPress={() => handleProductClick(item)}>
+              <Card
+                style={styles.card}
+                key={item._id}
+                onPress={() => handleProductClick(item)}
+              >
                 <ImageBackground
                   style={styles.product_photo}
                   source={item.image !== "" ? { uri: item.image } : null}
@@ -235,7 +238,7 @@ const styles = StyleSheet.create({
   backdrop: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     flex: 1,
-  }
+  },
 });
 
 export default MenuPage;
