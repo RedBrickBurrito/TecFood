@@ -17,15 +17,15 @@ import {
 } from "@ui-kitten/components";
 import SyncStorage from "sync-storage";
 import { showCartAlert } from "./CartComponent";
+import syncStorage from "sync-storage";
 
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage(props) {
+function ProductPage({product, hide}) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
-  const { product } = props;
 
   const handlePress = (sign) => {
     if (sign === "minus") {
@@ -40,9 +40,14 @@ function ProductPage(props) {
   };
 
   const handleAddToCart = (productId, productName, productQuantity) => {
-    SyncStorage.set(productId, { productName, productQuantity });
+    item = {'product': productId, 'name': productName, 'quantity': productQuantity}
+    if(SyncStorage.get('carrito') == undefined) {
+      SyncStorage.set('carrito', {})
+    }
+    cart = SyncStorage.get('carrito')
+    SyncStorage.set('carrito', {...cart, item});
     showCartAlert(productName);
-    const result = SyncStorage.get(productId);
+    const result = SyncStorage.get('carrito');
     console.log(result);
   };
 
@@ -60,9 +65,7 @@ function ProductPage(props) {
         <Layout style={styles.buttonContainer}>
           <Button
             style={{ top: "30%" }}
-            onPress={() => {
-              this.props.navigation.navigate("MenuPage");
-            }}
+            onPress={hide}
             size="giant"
             status="control"
             accessoryRight={closeIcon}
@@ -163,6 +166,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
+    backgroundColor: "#F7FBFB",
   },
   qtyButton: {
     backgroundColor: "#ffffff",

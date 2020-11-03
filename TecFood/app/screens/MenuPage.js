@@ -146,7 +146,7 @@ export const MenuPage = ({ route, navigation }) => {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setVisible(false)}
       >
-        <ProductPage product={selectedProduct} />
+        <ProductPage product={selectedProduct} hide={() => setVisible(false)}/>
       </Modal>
     </SafeAreaView>
   );
