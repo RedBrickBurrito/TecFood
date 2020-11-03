@@ -9,12 +9,14 @@ import { default as theme } from "./custom-theme.json";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import SyncStorage from "sync-storage";
 
 import SignUp from "./app/screens/SignUp";
 import SignIn from "./app/screens/SignIn";
 import MainScreen from "./app/screens/MainScreen";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
+import CartComponent from "./app/screens/CartComponent";
 
 const Stack = createStackNavigator();
 
@@ -32,6 +34,11 @@ export default class App extends React.Component {
   async _loadFontsAsync() {
     await Font.loadAsync(customFonts);
     this.setState({ fontsLoaded: true });
+  }
+
+  async _loadSyncStorage() {
+    const data = await SyncStorage.init();
+    console.log("AsyncStorage is ready!", data);
   }
 
   componentDidMount() {
@@ -52,6 +59,10 @@ export default class App extends React.Component {
                   <Stack.Screen name="Main" component={MainScreen} />
                   <Stack.Screen name="MenuPage" component={MenuPage} />
                   <Stack.Screen name="ProductPage" component={ProductPage} />
+                  <Stack.Screen
+                    name="CartComponent"
+                    component={CartComponent}
+                  />
                 </Stack.Navigator>
               </ApplicationProvider>
             </>

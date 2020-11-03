@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
-  View,
   Text,
   Dimensions,
   ScrollView,
   ImageBackground,
-  Alert,
 } from "react-native";
 import {
   Card,
@@ -17,13 +15,13 @@ import {
   Icon,
   Layout,
 } from "@ui-kitten/components";
-import MenuPage from "./MenuPage";
-import axios from "axios";
+import SyncStorage from "sync-storage";
+import { showCartAlert } from "./CartComponent";
 
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage(props, { navigation }) {
+function ProductPage(props) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
@@ -41,8 +39,11 @@ function ProductPage(props, { navigation }) {
     }
   };
 
-  const handleAddToCart = (productId) => {
-    alert("Added " + productId, { cancelable: true });
+  const handleAddToCart = (productId, productName, productQuantity) => {
+    SyncStorage.set(productId, { productName, productQuantity });
+    showCartAlert(productName);
+    const result = SyncStorage.get(productId);
+    console.log(result);
   };
 
   return (
@@ -59,7 +60,9 @@ function ProductPage(props, { navigation }) {
         <Layout style={styles.buttonContainer}>
           <Button
             style={{ top: "30%" }}
-            onPress={() => navigation.navigate("MenuPage")}
+            onPress={() => {
+              this.props.navigation.navigate("MenuPage");
+            }}
             size="giant"
             status="control"
             accessoryRight={closeIcon}
@@ -110,7 +113,7 @@ function ProductPage(props, { navigation }) {
         <Button
           style={styles.addToCart}
           size="medium"
-          onPress={() => handleAddToCart(product._id)}
+          onPress={() => handleAddToCart(product._id, product.name, quantity)}
         >
           <Text>Add to Cart (${(product.price / 100) * quantity})</Text>
         </Button>

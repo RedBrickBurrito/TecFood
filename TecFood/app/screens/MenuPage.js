@@ -6,6 +6,7 @@ import {
   Platform,
   StatusBar,
   ImageBackground,
+  View,
 } from "react-native";
 import {
   BottomNavigation,
@@ -27,8 +28,10 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 import Animated, { color } from "react-native-reanimated";
 import ProductPage from "./ProductPage";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import axios from "axios";
+import CartComponent from "./CartComponent";
+
+import BottomSheet from "reanimated-bottom-sheet";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 

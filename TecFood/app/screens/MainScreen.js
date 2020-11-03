@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import axios from "axios";
 import { PropsService } from "@ui-kitten/components/devsupport";
+import CartComponent from "./CartComponent";
 
 const shoppingCartIcon = (props) => <Icon {...props} name="bell-outline" />;
 

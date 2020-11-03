@@ -16,6 +16,7 @@ import {
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { loginHandler } from "../../services/LoginService";
 import { set } from "react-native-reanimated";
+import CartComponent from "./CartComponent";
 
 function SignIn(props) {
   const [data, setData] = useState({ email: "", password: "" });
