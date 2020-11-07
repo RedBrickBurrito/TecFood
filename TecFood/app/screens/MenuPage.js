@@ -85,7 +85,7 @@ export const MenuPage = ({ route, navigation }) => {
                 status="control"
                 size="large"
                 accessoryLeft={backIcon}
-                onPress={() => navigation.navigate("Main")}
+                onPress={() => navigation.navigate("MainScreen")}
               />
               <Text style={styles.restaurantTitle}>
                 Restaurant {restaurantName}
@@ -134,7 +134,7 @@ export const MenuPage = ({ route, navigation }) => {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setVisible(false)}
       >
-        <ProductPage product={selectedProduct} />
+        <ProductPage product={selectedProduct} hide={() => setVisible(false)} />
       </Modal>
     </SafeAreaView>
   );

@@ -20,11 +20,10 @@ import {
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage(props, { navigation }) {
+function ProductPage({ product, hide }) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
-  const { product } = props;
 
   const handlePress = (sign) => {
     if (sign === "minus") {
@@ -47,7 +46,7 @@ function ProductPage(props, { navigation }) {
       >
         <Layout style={styles.buttonContainer}>
           <Button
-            onPress={() => this.props.setVisible(false)}
+            onPress={hide}
             size="giant"
             status="control"
             accessoryRight={closeIcon}
