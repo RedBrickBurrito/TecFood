@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,12 +17,11 @@ import {
 } from "@ui-kitten/components";
 import SyncStorage from "sync-storage";
 import { showCartAlert } from "./CartComponent";
-import syncStorage from "sync-storage";
 
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage({product, hide}) {
+function ProductPage({ product, hide }) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
@@ -40,14 +39,14 @@ function ProductPage({product, hide}) {
   };
 
   const handleAddToCart = (productId, productName, productQuantity) => {
-    item = {'product': productId, 'name': productName, 'quantity': productQuantity}
-    if(SyncStorage.get('carrito') == undefined) {
-      SyncStorage.set('carrito', {})
+    item = { product: productId, name: productName, quantity: productQuantity };
+    if (SyncStorage.get("carrito") == undefined) {
+      SyncStorage.set("carrito", {});
     }
-    cart = SyncStorage.get('carrito')
-    SyncStorage.set('carrito', {...cart, item});
+    cart = SyncStorage.get("carrito");
+    SyncStorage.set("carrito", { ...cart, item });
     showCartAlert(productName);
-    const result = SyncStorage.get('carrito');
+    const result = SyncStorage.get("carrito");
     console.log(result);
   };
 

@@ -3,22 +3,10 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
-  Platform,
   StatusBar,
   ImageBackground,
-  View,
 } from "react-native";
-import {
-  BottomNavigation,
-  BottomNavigationTab,
-  Icon,
-  Card,
-  Text,
-  Button,
-  Layout,
-  Modal,
-} from "@ui-kitten/components";
-import { LinearGradient } from "expo";
+import { Icon, Card, Text, Button, Layout, Modal } from "@ui-kitten/components";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -29,19 +17,14 @@ import HeaderImageScrollView, {
 import Animated, { color } from "react-native-reanimated";
 import ProductPage from "./ProductPage";
 import axios from "axios";
-import CartComponent from "./CartComponent";
-
-import BottomSheet from "reanimated-bottom-sheet";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
 export const MenuPage = ({ route, navigation }) => {
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [visible, setVisible] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState({});
   const mounted = useRef();
 
-  const MIN_HEIGHT = Platform.OS === "ios" ? 90 : 75;
   const MAX_HEIGHT = 250;
 
   const { restaurantId, restaurantName } = route.params;
@@ -146,7 +129,7 @@ export const MenuPage = ({ route, navigation }) => {
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setVisible(false)}
       >
-        <ProductPage product={selectedProduct} hide={() => setVisible(false)}/>
+        <ProductPage product={selectedProduct} hide={() => setVisible(false)} />
       </Modal>
     </SafeAreaView>
   );

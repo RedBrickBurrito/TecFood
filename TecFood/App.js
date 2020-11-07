@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import { useDeviceOrientation } from "@react-native-community/hooks";
-import axios from "axios";
+import React from "react";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
