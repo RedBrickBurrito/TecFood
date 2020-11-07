@@ -26,7 +26,6 @@ function SignUp(props) {
   const [validated, setValidated] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const mounted = useRef();
-  const [visible, setVisible] = useState(false);
 
   const handleSubmit = () => {
     if (validated) {
