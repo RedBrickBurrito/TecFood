@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  View,
   Text,
   Dimensions,
   ScrollView,
@@ -16,6 +15,8 @@ import {
   Icon,
   Layout,
 } from "@ui-kitten/components";
+import SyncStorage from "sync-storage";
+import { showCartAlert } from "./CartComponent";
 
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
@@ -37,15 +38,32 @@ function ProductPage({ product, hide }) {
     }
   };
 
+  const handleAddToCart = (productId, productName, productQuantity) => {
+    item = { product: productId, name: productName, quantity: productQuantity };
+    if (SyncStorage.get("carrito") == undefined) {
+      SyncStorage.set("carrito", {});
+    }
+    cart = SyncStorage.get("carrito");
+    SyncStorage.set("carrito", { ...cart, item });
+    showCartAlert(productName);
+    const result = SyncStorage.get("carrito");
+    console.log(result);
+  };
+
   return (
     <Card style={styles.card} appearance="filled">
       <ImageBackground
-        source={product.image !== "" ? { uri: product.image } : null}
+        source={
+          product.image !== ""
+            ? { uri: product.image }
+            : require("../assets/R_Option1.jpg")
+        }
         style={styles.productImage}
         resizeMode="cover"
       >
         <Layout style={styles.buttonContainer}>
           <Button
+            style={{ top: "30%" }}
             onPress={hide}
             size="giant"
             status="control"
@@ -54,7 +72,7 @@ function ProductPage({ product, hide }) {
           ></Button>
         </Layout>
       </ImageBackground>
-      <ScrollView style={{ width: "100%", height: "100%" }}>
+      <ScrollView>
         <Text style={styles.title}>{product.name}</Text>
         {product.includedSides.map((side) => {
           return (
@@ -77,7 +95,7 @@ function ProductPage({ product, hide }) {
           textStyle={styles.inputText}
           onChangeText={(value) => setSpecial(value)}
         />
-        <View style={styles.quantity}>
+        <Layout style={styles.quantity}>
           <Button
             style={styles.qtyButton}
             onPress={() => handlePress("minus")}
@@ -93,8 +111,12 @@ function ProductPage({ product, hide }) {
           >
             <Text style={styles.qtyButtonText}>+</Text>
           </Button>
-        </View>
-        <Button style={styles.addToCart} size="medium">
+        </Layout>
+        <Button
+          style={styles.addToCart}
+          size="medium"
+          onPress={() => handleAddToCart(product._id, product.name, quantity)}
+        >
           <Text>Add to Cart (${(product.price / 100) * quantity})</Text>
         </Button>
       </ScrollView>
@@ -113,13 +135,11 @@ const styles = StyleSheet.create({
   },
   productImage: {
     alignSelf: "center",
-    width: width * 0.8,
-    height: height * 0.15,
-    borderBottomEndRadius: 29,
-  },
-  attributes: {
-    justifyContent: "space-evenly",
-    minHeight: "50%",
+    marginBottom: "1%",
+    width: width * 0.85,
+    height: 170,
+    top: "-4%",
+    borderBottomLeftRadius: 29,
   },
   title: {
     fontFamily: "OpenSans_Regular",
@@ -145,6 +165,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-around",
+    backgroundColor: "#F7FBFB",
   },
   qtyButton: {
     backgroundColor: "#ffffff",
