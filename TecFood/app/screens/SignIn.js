@@ -7,7 +7,6 @@ import {
   StatusBar,
   Text,
   TouchableWithoutFeedback,
-  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -15,7 +14,6 @@ import {
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { loginHandler } from "../../services/LoginService";
-import { set } from "react-native-reanimated";
 
 function SignIn(props) {
   const [data, setData] = useState({ email: "", password: "" });
@@ -127,7 +125,9 @@ function SignIn(props) {
           textStyle={styles.input_text}
         />
         <Button
-          onPress={(handleSubmit, () => props.navigation.navigate("MenuPage"))}
+          onPress={
+            (handleSubmit, () => props.navigation.navigate("MainScreen"))
+          }
           style={validated ? styles.submit_button : styles.disabled_button}
           status="primary"
           size="medium"

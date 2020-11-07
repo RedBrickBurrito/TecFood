@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -16,7 +16,6 @@ import {
   Icon,
   Layout,
 } from "@ui-kitten/components";
-import MenuPage from "./MenuPage";
 
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;

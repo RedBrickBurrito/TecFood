@@ -1,23 +1,18 @@
 import {
-  Button,
   Card,
   BottomNavigation,
   BottomNavigationTab,
   Icon,
 } from "@ui-kitten/components";
-import Axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
 import axios from "axios";
-import { PropsService } from "@ui-kitten/components/devsupport";
 
 const shoppingCartIcon = (props) => <Icon {...props} name="bell-outline" />;
 
 const homeIcon = (props) => <Icon {...props} name="home-outline" />;
 
 const userIcon = (props) => <Icon {...props} name="person-outline" />;
-
-const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
 function MainScreen(props) {
   const [restaurants, setRestaurants] = useState([]);
