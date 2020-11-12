@@ -19,6 +19,7 @@ import CartComponent from "./app/screens/CartComponent";
 import ChangeEmail from "./app/screens/ChangeEmail";
 import ChangeName from "./app/screens/ChangeName";
 import ChangePayment from "./app/screens/ChangePayment";
+import DrawerContent from "./app/screens/DrawerContent";
 
 const Start = createStackNavigator();
 const Main = createStackNavigator();
@@ -35,9 +36,9 @@ const mainNavigator = () => {
   );
 };
 
-const drawerNavigator = ({navigation, route}) => {
+const drawerNavigator = () => {
   return(
-    <Drawer.Navigator screenOptions={{headerShown: false}} >
+    <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={DrawerContent}>
       <Drawer.Screen name="Main Screen" component={mainNavigator} />
       <Drawer.Screen name="Change Email" component={ChangeEmail} />
       <Drawer.Screen name="Change Name" component={ChangeName} />
