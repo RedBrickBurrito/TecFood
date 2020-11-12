@@ -7,6 +7,7 @@ import { default as theme } from "./custom-theme.json";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import SyncStorage from "sync-storage";
 
 import SignUp from "./app/screens/SignUp";
@@ -15,8 +16,35 @@ import HomePage from "./app/screens/HomePage";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
 import CartComponent from "./app/screens/CartComponent";
+import ChangeEmail from "./app/screens/ChangeEmail";
+import ChangeName from "./app/screens/ChangeName";
+import ChangePayment from "./app/screens/ChangePayment";
 
-const Stack = createStackNavigator();
+const Start = createStackNavigator();
+const Main = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const mainNavigator = () => {
+  return(
+    <Main.Navigator headerMode="none">
+      <Main.Screen name="MainScreen" component={MainScreen} />
+      <Main.Screen name="MenuPage" component={MenuPage} />
+      <Main.Screen name="ProductPage" component={ProductPage} />
+      <Main.Screen name="CartComponent" component={CartComponent} />
+    </Main.Navigator>
+  );
+};
+
+const drawerNavigator = ({navigation, route}) => {
+  return(
+    <Drawer.Navigator screenOptions={{headerShown: false}} >
+      <Drawer.Screen name="Main Screen" component={mainNavigator} />
+      <Drawer.Screen name="Change Email" component={ChangeEmail} />
+      <Drawer.Screen name="Change Name" component={ChangeName} />
+      <Drawer.Screen name="Change Payment" component={ChangePayment} />
+    </Drawer.Navigator>
+  );
+};
 
 let customFonts = {
   Coolvetica: require("./app/assets/fonts/coolvetica_rg.ttf"),
@@ -47,24 +75,14 @@ export default class App extends React.Component {
     if (this.state.fontsLoaded) {
       return (
         <NavigationContainer>
-          {
-            <>
-              <IconRegistry icons={EvaIconsPack} />
-              <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-                <Stack.Navigator headerMode="none">
-                  <Stack.Screen name="SignUp" component={SignUp} />
-                  <Stack.Screen name="SignIn" component={SignIn} />
-                  <Stack.Screen name="HomePage" component={HomePage} />
-                  <Stack.Screen name="MenuPage" component={MenuPage} />
-                  <Stack.Screen name="ProductPage" component={ProductPage} />
-                  <Stack.Screen
-                    name="CartComponent"
-                    component={CartComponent}
-                  />
-                </Stack.Navigator>
-              </ApplicationProvider>
-            </>
-          }
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+          <Start.Navigator headerMode="none">
+            <Start.Screen name="SignUp" component={SignUp} />
+            <Start.Screen name="SignIn" component={SignIn} />
+            <Start.Screen name="Drawer" component={drawerNavigator} />
+          </Start.Navigator>
+          </ApplicationProvider>
         </NavigationContainer>
       );
     } else {
