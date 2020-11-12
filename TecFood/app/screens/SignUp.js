@@ -180,6 +180,14 @@ function SignUp(props) {
         >
           Submit
         </Button>
+        <Button
+          onPress={() => props.navigation.navigate("Drawer")}
+          style={styles.submit_button}
+          status="primary"
+          size="medium"
+        >
+          Go to Main Screen
+        </Button>
       </Card>
       <Text style={styles.mainText}>
         ¿Already have an account?{" "}
