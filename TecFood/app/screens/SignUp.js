@@ -14,6 +14,8 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
+import { useFocusEffect } from "@react-navigation/native";
+import SyncStorage from "sync-storage";
 import { registerUser } from "../../services/SignUpService";
 
 function SignUp(props) {
@@ -118,6 +120,12 @@ function SignUp(props) {
   useEffect(() => {
     mounted.current = true;
   }, []);
+
+  useFocusEffect(() => {
+    const user = SyncStorage.get("USER_TOKEN");
+
+    if(user) props.navigation.navigate("MainScreen");
+  });
 
   return (
     <View style={styles.background}>

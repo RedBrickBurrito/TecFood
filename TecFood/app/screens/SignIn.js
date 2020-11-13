@@ -7,12 +7,15 @@ import {
   StatusBar,
   Text,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
+import { useFocusEffect } from "@react-navigation/native";
+import SyncStorage from "sync-storage";
 import { loginHandler } from "../../services/LoginService";
 
 function SignIn(props) {
@@ -29,11 +32,25 @@ function SignIn(props) {
     if (validated) {
       loginHandler(data)
         .then((response) => {
-          console.log(response);
+          if (response.status == 200) {
+            SyncStorage.set("USER_TOKEN", response.token);
+            Alert.alert("Success", response.message, [
+              {
+                text: "Understood",
+                onPress: () => props.navigation.navigate("MainScreen"),
+              },
+            ]);
+          } else {
+            Alert.alert("Error", response.message, [
+              {
+                text: "Understood",
+              },
+            ]);
+          }
         })
         .catch((error) => {
           console.log(error);
-        }); // need a callback when backend is finished
+        });
     }
   };
 
@@ -83,6 +100,12 @@ function SignIn(props) {
     mounted.current = true;
   }, []);
 
+  useFocusEffect(() => {
+    const user = SyncStorage.get("USER_TOKEN");
+
+    if(user) props.navigation.navigate("MainScreen");
+  });
+
   return (
     <View style={styles.background}>
       <StatusBar
@@ -125,9 +148,7 @@ function SignIn(props) {
           textStyle={styles.input_text}
         />
         <Button
-          onPress={
-            (handleSubmit, () => props.navigation.navigate("MainScreen"))
-          }
+          onPress={handleSubmit}
           style={validated ? styles.submit_button : styles.disabled_button}
           status="primary"
           size="medium"
