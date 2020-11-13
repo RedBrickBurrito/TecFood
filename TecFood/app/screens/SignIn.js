@@ -37,7 +37,7 @@ function SignIn(props) {
             Alert.alert("Success", response.message, [
               {
                 text: "Understood",
-                onPress: () => props.navigation.navigate("MainScreen"),
+                onPress: () => props.navigation.navigate("Drawer"),
               },
             ]);
           } else {
