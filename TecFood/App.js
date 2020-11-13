@@ -11,7 +11,7 @@ import SyncStorage from "sync-storage";
 
 import SignUp from "./app/screens/SignUp";
 import SignIn from "./app/screens/SignIn";
-import MainScreen from "./app/screens/MainScreen";
+import HomePage from "./app/screens/HomePage";
 import ProductPage from "./app/screens/ProductPage";
 import MenuPage from "./app/screens/MenuPage";
 import CartComponent from "./app/screens/CartComponent";
@@ -54,7 +54,7 @@ export default class App extends React.Component {
                 <Stack.Navigator headerMode="none">
                   <Stack.Screen name="SignUp" component={SignUp} />
                   <Stack.Screen name="SignIn" component={SignIn} />
-                  <Stack.Screen name="MainScreen" component={MainScreen} />
+                  <Stack.Screen name="HomePage" component={HomePage} />
                   <Stack.Screen name="MenuPage" component={MenuPage} />
                   <Stack.Screen name="ProductPage" component={ProductPage} />
                   <Stack.Screen

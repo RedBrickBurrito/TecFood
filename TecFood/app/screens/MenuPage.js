@@ -85,7 +85,7 @@ export const MenuPage = ({ route, navigation }) => {
                 status="control"
                 size="large"
                 accessoryLeft={backIcon}
-                onPress={() => navigation.navigate("MainScreen")}
+                onPress={() => navigation.navigate("HomePage")}
               />
               <Text style={styles.restaurantTitle}>
                 Restaurant {restaurantName}
