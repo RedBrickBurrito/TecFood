@@ -42,7 +42,7 @@ function SignIn(props) {
             Alert.alert("Success", response.message, [
               {
                 text: "Understood",
-                onPress: () => props.navigation.navigate("HomePage"),
+                onPress: () => props.navigation.navigate("Drawer"),
               },
             ]);
           } else {
