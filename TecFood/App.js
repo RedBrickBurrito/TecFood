@@ -38,7 +38,7 @@ const mainNavigator = () => {
 
 const drawerNavigator = () => {
   return(
-    <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={DrawerContent}>
+    <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={DrawerContent} backBehavior="initialRoute" >
       <Drawer.Screen name="Main Screen" component={mainNavigator} />
       <Drawer.Screen name="Change Email" component={ChangeEmail} />
       <Drawer.Screen name="Change Name" component={ChangeName} />
