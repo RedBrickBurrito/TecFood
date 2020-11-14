@@ -8,6 +8,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Dimensions } from "react-native";
 import SyncStorage from "sync-storage";
 
 import SignUp from "./app/screens/SignUp";
@@ -21,6 +22,7 @@ import ChangeName from "./app/screens/ChangeName";
 import ChangePayment from "./app/screens/ChangePayment";
 import DrawerContent from "./app/screens/DrawerContent";
 
+const { height, width } = Dimensions.get("screen");
 const Start = createStackNavigator();
 const Main = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -37,8 +39,18 @@ const mainNavigator = () => {
 };
 
 const drawerNavigator = () => {
+  const drawerContentStyle = {
+    justifyContent: "space-between",
+    height: height * 0.85,
+  }
+
   return(
-    <Drawer.Navigator screenOptions={{headerShown: false}} drawerContent={DrawerContent} backBehavior="initialRoute" >
+    <Drawer.Navigator 
+      screenOptions={{headerShown: false}} 
+      drawerContent={DrawerContent} 
+      backBehavior="initialRoute" 
+      drawerContentOptions={{ contentContainerStyle: drawerContentStyle }}
+    >
       <Drawer.Screen name="Main Screen" component={mainNavigator} />
       <Drawer.Screen name="Change Email" component={ChangeEmail} />
       <Drawer.Screen name="Change Name" component={ChangeName} />
