@@ -124,7 +124,7 @@ function SignUp(props) {
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
-    if (user) props.navigation.navigate("HomePage");
+    if(user) props.navigation.navigate("Drawer");
   });
 
   return (
@@ -187,14 +187,6 @@ function SignUp(props) {
           disabled={validated ? false : true}
         >
           Submit
-        </Button>
-        <Button
-          onPress={() => props.navigation.navigate("Drawer")}
-          style={styles.submit_button}
-          status="primary"
-          size="medium"
-        >
-          Go to Main Screen
         </Button>
       </Card>
       <Text style={styles.mainText}>
