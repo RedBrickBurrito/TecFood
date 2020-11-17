@@ -107,7 +107,10 @@ function HomePage(props) {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Card style={styles.itemContainer}>
+    <Card style={styles.itemContainer} onPress={() => props.navigation.navigate("MenuPage", {
+      restaurantId: item._id,
+      restaurantName: item.name
+    })}>
       <ImageBackground
         resizeMode="cover"
         style={styles.restaurantImage}
