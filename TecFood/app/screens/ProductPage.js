@@ -26,7 +26,7 @@ function ProductPage({ product, hide }) {
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
 
-  const handlePress = (sign) => {
+  const handleQuantityButtonPress = (sign) => {
     if (sign === "minus") {
       if (quantity > 1) {
         setQuantity(quantity - 1);
@@ -40,14 +40,14 @@ function ProductPage({ product, hide }) {
 
   const handleAddToCart = (productId, productName, productQuantity) => {
     item = { product: productId, name: productName, quantity: productQuantity };
-    if (SyncStorage.get("carrito") == undefined) {
-      SyncStorage.set("carrito", {});
+    if (SyncStorage.get("cart") == undefined) {
+      SyncStorage.set("cart", {});
     }
-    cart = SyncStorage.get("carrito");
-    SyncStorage.set("carrito", { ...cart, item });
+    cart = SyncStorage.get("cart");
+    SyncStorage.set("cart", { ...cart, item });
     showCartAlert(productName);
-    const result = SyncStorage.get("carrito");
-    console.log(result);
+    const cartItems = SyncStorage.get("cart");
+    console.log(cartItems);
   };
 
   return (
@@ -98,7 +98,7 @@ function ProductPage({ product, hide }) {
         <Layout style={styles.quantity}>
           <Button
             style={styles.qtyButton}
-            onPress={() => handlePress("minus")}
+            onPress={() => handleQuantityButtonPress("minus")}
             size="small"
           >
             <Text style={styles.qtyButtonText}>-</Text>
@@ -106,7 +106,7 @@ function ProductPage({ product, hide }) {
           <Text style={styles.qtyText}>{quantity}</Text>
           <Button
             style={styles.qtyButton}
-            onPress={() => handlePress("plus")}
+            onPress={() => handleQuantityButtonPress("plus")}
             size="small"
           >
             <Text style={styles.qtyButtonText}>+</Text>
