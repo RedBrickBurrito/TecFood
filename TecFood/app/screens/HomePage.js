@@ -126,8 +126,8 @@ function HomePage(props) {
         style={styles.restaurantImage}
         source={require("../assets/RestaurantFoodHeader.jpg")}
       />
-      <Text style={styles.carrouselItemTitle}>{item.title}</Text>
-      <Text style={styles.carrouselItemText}>{item.text}</Text>
+      <Text style={styles.carrouselItemTitle}>{item.name}</Text>
+      <Text style={styles.carrouselItemText}>{item.location}</Text>
     </Card>
   );
 
@@ -157,7 +157,7 @@ function HomePage(props) {
       <Text style={styles.restaurantText}>Restaurants</Text>
       <View style={{ top: "-3%" }}>
         <Carousel
-          data={carouselData}
+          data={restaurants}
           renderItem={renderItem}
           onSnapToItem={(index) => setActiveSlide(index)}
           sliderWidth={500}
