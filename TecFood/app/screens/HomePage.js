@@ -106,19 +106,6 @@ function HomePage(props) {
       });
   }, []);
 
-  const carouselData = [
-    {
-      title: "Super Salads",
-      text: "Fast Food, Drinks and snacks.",
-    },
-    {
-      title: "Kikiris",
-    },
-    {
-      title: "Kikiris",
-    },
-  ];
-
   const renderItem = ({ item }) => (
     <Card style={styles.itemContainer}>
       <ImageBackground
