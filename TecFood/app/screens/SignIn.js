@@ -16,6 +16,7 @@ import {
 import { Button, Card, Input, Icon } from "@ui-kitten/components";
 import { useFocusEffect } from "@react-navigation/native";
 import SyncStorage from "sync-storage";
+import jwt_decode from "jwt-decode";
 import { loginHandler } from "../../services/LoginService";
 
 function SignIn(props) {
@@ -33,7 +34,12 @@ function SignIn(props) {
       loginHandler(data)
         .then((response) => {
           if (response.status == 200) {
-            SyncStorage.set("USER_TOKEN", response.token);
+            const token = response.token;
+            const decodedToken = jwt_decode(token);
+
+            SyncStorage.set("USER_TOKEN", token);
+            SyncStorage.set("USER", decodedToken.email);
+
             Alert.alert("Success", response.message, [
               {
                 text: "Understood",

@@ -10,7 +10,8 @@ const settingsIcon = () => <Icon name="settings-2-outline" fill="#000" style={{ 
 const cardIcon = () => <Icon name="credit-card-outline" fill="#000" style={{ height: 25, width: 25 }} />;
 
 function DrawerContent(props) {
-  
+  const user = SyncStorage.get("USER");
+
   const logout = () => {
     SyncStorage.remove("USER_TOKEN");
     props.navigation.navigate("SignUp");
@@ -22,7 +23,7 @@ function DrawerContent(props) {
       <View style={styles.drawer_header} >
         <View>
           <Text style={styles.hi}>Hi</Text>
-          <Text style={styles.name}>Eddy</Text>
+          <Text style={styles.name}>{user.Name}</Text>
         </View>
         <Icon name="person" style={styles.icon} fill="#000" />
       </View>
@@ -49,7 +50,7 @@ function DrawerContent(props) {
         </View>
       </View>
       <View style={styles.footer} >
-        <Icon name="person-remove-outline" style={{height: 32, width: 32}} fill="#000" />
+        <Icon name="log-out" style={{height: 32, width: 32}} fill="#000" />
         <Text style={styles.logout} onPress={() => logout()} >Logout</Text>
       </View>
     </DrawerContentScrollView>

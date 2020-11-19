@@ -14,6 +14,8 @@ const homeIcon = (props) => <Icon {...props} name="home-outline" />;
 
 const userIcon = (props) => <Icon {...props} name="person-outline" />;
 
+const searchIcon = (props) => <Icon {...props} name="search-outline" />;
+
 function MainScreen(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -58,9 +60,15 @@ function MainScreen(props) {
         selectedIndex={selectedIndex}
         onSelect={(index) => setSelectedIndex(index)}
         style={(styles.bottomNavigation, styles.shadow)}
+        indicatorStyle={{
+          bottom: 0,
+          borderTopLeftRadius: 29,
+          borderTopRightRadius: 29,
+        }}
       >
         <BottomNavigationTab icon={userIcon} title="User" />
         <BottomNavigationTab icon={homeIcon} title="Home" />
+        <BottomNavigationTab icon={searchIcon} title="Search" />
         <BottomNavigationTab icon={shoppingCartIcon} title="Orders" />
       </BottomNavigation>
     </View>
