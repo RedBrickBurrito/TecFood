@@ -1,19 +1,41 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Alert } from "react-native";
 import { Card, Input, Button, Icon } from "@ui-kitten/components";
+import { handleUpdateName } from "../../services/SettingsService";
 
 const { height, width } = Dimensions.get("window");
 const backIcon = () => <Icon name="arrow-back" style={styles.icon} fill="black" />;
 
 function ChangeName({ navigation }) {
-  const [name, setName] = useState({first: "", last: ""});
+  const [name, setName] = useState({name: null, lastName: null});
   const [status, setStatus] = useState({first: "basic", last: "basic"})
   const validated = useRef(false);
   const mounted = useRef()
 
   const handleBackPress = () => {
     navigation.navigate("MainScreen")
-  }
+  };
+
+  const handleSubmit = () => {
+    handleUpdateName(name).then(response => {
+      if(response.status == 200) {
+        Alert.alert("Success", response.message, [
+          {
+            text: "Understood",
+          },
+        ]);
+      } else {
+        Alert.alert("Error", response.message, [
+          {
+            text: "Understood",
+          },
+        ]);
+      };
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
 
   const validate = () => {
     validated.current = true;
@@ -39,7 +61,7 @@ function ChangeName({ navigation }) {
         return { ...prevState, last: "success" };
       });
     }
-  }
+  };
 
   useEffect(() => {
     if (mounted.current) validate();
@@ -60,18 +82,18 @@ function ChangeName({ navigation }) {
             style={styles.input}
             textStyle={styles.input_text}
             status={status.first}
-            value={name.first}
-            onChangeText={value => setName(prevState => ({...prevState, first: value}))}
+            value={name.name}
+            onChangeText={value => setName(prevState => ({...prevState, name: value}))}
           />
           <Input
             placeholder="Last Name"
             style={styles.input}
             textStyle={styles.input_text}
             status={status.last}
-            value={name.last}
-            onChangeText={value => setName(prevState => ({...prevState, last: value}))}
+            value={name.lastName}
+            onChangeText={value => setName(prevState => ({...prevState, lastName: value}))}
           />
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={() => handleSubmit()} >
             <Text style={styles.button_text}>Submit Changes</Text>
           </Button>  
         </View>

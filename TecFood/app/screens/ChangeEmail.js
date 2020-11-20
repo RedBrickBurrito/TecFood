@@ -1,19 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Alert } from "react-native";
 import { Card, Input, Button, Icon } from "@ui-kitten/components";
+import { handleUpdateEmail } from "../../services/SettingsService";
 
 const { height, width } = Dimensions.get("window");
 const backIcon = () => <Icon name="arrow-back" style={styles.icon} fill="black" />;
 
 function ChangeEmail({ navigation }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState();
   const [status, setStatus] = useState("basic")
   const validated = useRef(false);
   const mounted = useRef()
 
   const handleBackPress = () => {
     navigation.navigate("MainScreen")
-  }
+  };
+
+  const handleSubmit = () => {
+    handleUpdateEmail(email).then(response => {
+      console.log(response);
+      if(response.status == 200) {
+        Alert.alert("Success", response.message, [
+          {
+            text: "Understood",
+          },
+        ]);
+      } else {
+        Alert.alert("Error", response.message, [
+          {
+            text: "Understood",
+          },
+        ]);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  };
 
   const validate = () => {
     const emailRegExp = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
@@ -25,7 +48,7 @@ function ChangeEmail({ navigation }) {
     } else {
       setStatus("success");
     }
-  }
+  };
 
   useEffect(() => {
     if (mounted.current) validate();
@@ -49,7 +72,7 @@ function ChangeEmail({ navigation }) {
             value={email}
             onChangeText={value => setEmail(value)}
           />
-          <Button style={styles.button}>
+          <Button style={styles.button} onPress={() => handleSubmit()}>
             <Text style={styles.button_text}>Submit Changes</Text>
           </Button>  
         </View>
