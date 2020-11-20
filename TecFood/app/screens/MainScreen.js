@@ -3,6 +3,7 @@ import {
   BottomNavigation,
   BottomNavigationTab,
   Icon,
+  Button,
 } from "@ui-kitten/components";
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
@@ -66,7 +67,7 @@ function MainScreen({navigation}) {
           borderTopRightRadius: 29,
         }}
       >
-        <BottomNavigationTab icon={userIcon} title="User" onPress={() => navigation.openDrawer()}/>
+        <BottomNavigationTab icon={userIcon} title="User" onPressIn={() => navigation.openDrawer()} />
         <BottomNavigationTab icon={homeIcon} title="Home" />
         <BottomNavigationTab icon={searchIcon} title="Search" />
         <BottomNavigationTab icon={shoppingCartIcon} title="Orders" />
