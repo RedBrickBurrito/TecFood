@@ -16,7 +16,7 @@ const userIcon = (props) => <Icon {...props} name="person-outline" />;
 
 const searchIcon = (props) => <Icon {...props} name="search-outline" />;
 
-function MainScreen(props) {
+function MainScreen({navigation}) {
   const [restaurants, setRestaurants] = useState([]);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const componentIsMounted = useRef(true);
@@ -42,7 +42,7 @@ function MainScreen(props) {
             <Card
               key={restaurant._id}
               onPress={() =>
-                props.navigation.navigate("MenuPage", {
+                navigation.navigate("MenuPage", {
                   restaurantId: restaurant._id,
                   restaurantName: restaurant.name,
                 })
@@ -66,7 +66,7 @@ function MainScreen(props) {
           borderTopRightRadius: 29,
         }}
       >
-        <BottomNavigationTab icon={userIcon} title="User" />
+        <BottomNavigationTab icon={userIcon} title="User" onPress={() => navigation.openDrawer()}/>
         <BottomNavigationTab icon={homeIcon} title="Home" />
         <BottomNavigationTab icon={searchIcon} title="Search" />
         <BottomNavigationTab icon={shoppingCartIcon} title="Orders" />
@@ -82,12 +82,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     elevation: 20,
     backgroundColor: "#f7fbfb",
-    borderColor: "#9FBEB6",
+    borderTopLeftRadius: 29,
+    borderTopRightRadius: 29,
+    fontFamily: "OpenSans_Regular",
   },
   shadow: {
     elevation: 20,
     position: "absolute",
     bottom: 0,
+    borderTopLeftRadius: 29,
+    borderTopRightRadius: 29,
   },
 });
 
