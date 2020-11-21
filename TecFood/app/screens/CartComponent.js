@@ -1,10 +1,15 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 
 export function showCartAlert(productName) {
-  alert("Added " + productName + " to the cart.", { cancelable: true });
+  Alert.alert(
+    "",
+    "Added " + productName + " to the cart.",
+    [{ text: "Close" }],
+    { cancelable: false }
+  );
 }
 
 function CartComponent(props, { navigation }) {
