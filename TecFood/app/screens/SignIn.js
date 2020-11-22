@@ -37,7 +37,7 @@ function SignIn(props) {
             Alert.alert("Success", response.message, [
               {
                 text: "Understood",
-                onPress: () => props.navigation.navigate("MainScreen"),
+                onPress: () => props.navigation.navigate("HomePage"),
               },
             ]);
           } else {
@@ -103,7 +103,7 @@ function SignIn(props) {
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
-    if(user) props.navigation.navigate("MainScreen");
+    if (user) props.navigation.navigate("HomePage");
   });
 
   return (
