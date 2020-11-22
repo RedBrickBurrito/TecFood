@@ -22,6 +22,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import Carousel from "react-native-snap-carousel";
+import SyncStorage from "sync-storage";
 
 const shoppingCartIcon = (props) => <Icon {...props} name="bell-outline" />;
 
@@ -44,9 +45,20 @@ function HomePage(props) {
   const componentIsMounted = useRef(true);
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
+  const user = SyncStorage.get("USER");
+
+  const getFirstNameUser = () => {
+    const splitString = user.Name.split(" ");
+    return splitString[0];
+  };
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
+  };
+
+  const logout = () => {
+    SyncStorage.remove("USER_TOKEN");
+    props.navigation.navigate("SignUp");
   };
 
   const renderMenuAction = () => (
@@ -64,7 +76,11 @@ function HomePage(props) {
         visible={menuVisible}
         onBackdropPress={toggleMenu}
       >
-        <MenuItem accessoryLeft={logoutIcon} title="Log-out" />
+        <MenuItem
+          accessoryLeft={logoutIcon}
+          title="Logout"
+          onPress={() => logout()}
+        />
       </OverflowMenu>
     </React.Fragment>
   );
@@ -107,10 +123,15 @@ function HomePage(props) {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Card style={styles.itemContainer} onPress={() => props.navigation.navigate("MenuPage", {
-      restaurantId: item._id,
-      restaurantName: item.name
-    })}>
+    <Card
+      style={styles.itemContainer}
+      onPress={() =>
+        props.navigation.navigate("MenuPage", {
+          restaurantId: item._id,
+          restaurantName: item.name,
+        })
+      }
+    >
       <ImageBackground
         resizeMode="cover"
         style={styles.restaurantImage}
@@ -137,7 +158,7 @@ function HomePage(props) {
           marginTop: "8%",
         }}
       >
-        Hi, Eddy
+        Hi, {getFirstNameUser()}
       </Text>
       <Text style={styles.mainText}>Let's eat</Text>
       <Image
