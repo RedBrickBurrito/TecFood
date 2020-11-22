@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Dimensions, Text, View } from "react-native"
+import { StyleSheet, Dimensions, Text, View, Alert } from "react-native"
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Icon } from "@ui-kitten/components";
 import SyncStorage from "sync-storage";
@@ -12,7 +12,20 @@ const cardIcon = () => <Icon name="credit-card-outline" fill="#000" style={{ hei
 function DrawerContent(props) {
   const user = SyncStorage.get("USER");
 
-  const logout = () => {
+  const handleAlert = () => {
+    Alert.alert("Logout", "Do you want to log out?", [
+      {
+        text: "Cancel",
+        style: "cancel"
+      },
+      {
+        text: "Log out",
+        onPress: () => handleLogout()
+      }
+    ])
+  }
+
+  const handleLogout = () => {
     SyncStorage.remove("USER_TOKEN");
     props.navigation.navigate("SignUp");
   };
@@ -51,7 +64,7 @@ function DrawerContent(props) {
       </View>
       <View style={styles.footer} >
         <Icon name="log-out" style={{height: 32, width: 32}} fill="#000" />
-        <Text style={styles.logout} onPress={() => logout()} >Logout</Text>
+        <Text style={styles.logout} onPress={() => handleAlert()} >Logout</Text>
       </View>
     </DrawerContentScrollView>
   )
