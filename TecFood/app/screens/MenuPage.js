@@ -97,7 +97,7 @@ export const MenuPage = ({ route, navigation }) => {
         <TriggeringView
           style={{
             height: "100%",
-            paddingBottom: "35%",
+            paddingBottom: "20%",
             backgroundColor: "#f9fefe",
             borderTopLeftRadius: 29,
             borderTopRightRadius: 29,
@@ -113,7 +113,6 @@ export const MenuPage = ({ route, navigation }) => {
               >
                 <ImageBackground
                   style={styles.product_photo}
-                  //item.image !== "" ? { uri: item.image } : null
                   source={
                     item.image !== ""
                       ? { uri: item.image }
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 24, height: 24 },
     shadowRadius: 42,
     elevation: 20,
-    marginBottom: "8%",
+    marginBottom: "15%",
     borderWidth: 0,
   },
   card_bg: {

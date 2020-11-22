@@ -13,7 +13,6 @@ import {
 import React, { useState, useEffect, useRef } from "react";
 import {
   View,
-  ScrollView,
   StyleSheet,
   SafeAreaView,
   Image,
@@ -85,7 +84,7 @@ function HomePage(props) {
     </React.Fragment>
   );
 
-  const renderTitle = (props) => (
+  const renderAppTitle = (props) => (
     <View>
       <Avatar
         style={styles.logo}
@@ -110,6 +109,7 @@ function HomePage(props) {
     </View>
   );
 
+  // fetch only the available restaurants
   useEffect(() => {
     axios
       .get("https://tecfood.herokuapp.com/api/restaurant")
@@ -122,7 +122,7 @@ function HomePage(props) {
       });
   }, []);
 
-  const renderItem = ({ item }) => (
+  const renderRestaurant = ({ item }) => (
     <Card
       style={styles.itemContainer}
       onPress={() =>
@@ -145,7 +145,7 @@ function HomePage(props) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f9fefe" }}>
       <TopNavigation
-        title={renderTitle}
+        title={renderAppTitle}
         accessoryRight={renderOverflowMenuAction}
         style={{ backgroundColor: "rgba(52, 52, 52, 0)" }}
       />
@@ -169,7 +169,7 @@ function HomePage(props) {
       <View style={{ top: "-3%" }}>
         <Carousel
           data={restaurants}
-          renderItem={renderItem}
+          renderItem={renderRestaurant}
           onSnapToItem={(index) => setActiveSlide(index)}
           sliderWidth={500}
           itemWidth={itemWidth}
