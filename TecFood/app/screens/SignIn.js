@@ -42,7 +42,7 @@ function SignIn(props) {
             Alert.alert("Success", response.message, [
               {
                 text: "Understood",
-                onPress: () => props.navigation.navigate("HomePage"),
+                onPress: () => props.navigation.navigate("Drawer"),
               },
             ]);
           } else {
@@ -108,7 +108,7 @@ function SignIn(props) {
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
-    if (user) props.navigation.navigate("HomePage");
+    if(user) props.navigation.navigate("Drawer");
   });
 
   return (

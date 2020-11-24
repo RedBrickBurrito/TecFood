@@ -124,7 +124,7 @@ function SignUp(props) {
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
-    if (user) props.navigation.navigate("HomePage");
+    if(user) props.navigation.navigate("Drawer");
   });
 
   return (

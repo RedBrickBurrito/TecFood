@@ -18,6 +18,7 @@ import {
   Image,
   Dimensions,
   ImageBackground,
+  Alert,
 } from "react-native";
 import axios from "axios";
 import Carousel from "react-native-snap-carousel";
@@ -55,6 +56,19 @@ function HomePage(props) {
     setMenuVisible(!menuVisible);
   };
 
+  const handleAlert = () => {
+    Alert.alert("Logout", "Do you want to log out?", [
+      {
+        text: "Cancel",
+        style: "cancel"
+      },
+      {
+        text: "Log out",
+        onPress: () => logout()
+      }
+    ])
+  }
+
   const logout = () => {
     SyncStorage.remove("USER_TOKEN");
     props.navigation.navigate("SignUp");
@@ -78,7 +92,7 @@ function HomePage(props) {
         <MenuItem
           accessoryLeft={logoutIcon}
           title="Logout"
-          onPress={() => logout()}
+          onPress={() => handleAlert()}
         />
       </OverflowMenu>
     </React.Fragment>
@@ -186,7 +200,7 @@ function HomePage(props) {
           borderTopRightRadius: 29,
         }}
       >
-        <BottomNavigationTab icon={userIcon} title="User" />
+        <BottomNavigationTab icon={userIcon} title="User" onPressIn={() => props.navigation.openDrawer()}/>
         <BottomNavigationTab icon={homeIcon} title="Home" />
         <BottomNavigationTab icon={searchIcon} title="Search" />
         <BottomNavigationTab icon={shoppingCartIcon} title="Orders" />
