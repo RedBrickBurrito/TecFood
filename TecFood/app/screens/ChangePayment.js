@@ -10,7 +10,7 @@ function ChangePayment({navigation}) {
   const [active, setActive] = useState({cash: false, paypal: false, card: false});
 
   const handleBackPress = () => {
-    navigation.navigate("MainScreen")
+    navigation.navigate("HomePage")
   }
 
   const handlePress = (type) => {

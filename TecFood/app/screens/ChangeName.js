@@ -13,7 +13,7 @@ function ChangeName({ navigation }) {
   const mounted = useRef()
 
   const handleBackPress = () => {
-    navigation.navigate("MainScreen")
+    navigation.navigate("HomePage")
   };
 
   const handleSubmit = () => {

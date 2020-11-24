@@ -13,7 +13,7 @@ function ChangeEmail({ navigation }) {
   const mounted = useRef()
 
   const handleBackPress = () => {
-    navigation.navigate("MainScreen")
+    navigation.navigate("HomePage")
   };
 
   const handleSubmit = () => {
