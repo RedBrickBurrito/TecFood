@@ -30,7 +30,7 @@ const Drawer = createDrawerNavigator();
 const mainNavigator = () => {
   return(
     <Main.Navigator headerMode="none">
-      <Main.Screen name="MainScreen" component={MainScreen} />
+      <Main.Screen name="HomePage" component={HomePage} />
       <Main.Screen name="MenuPage" component={MenuPage} />
       <Main.Screen name="ProductPage" component={ProductPage} />
       <Main.Screen name="CartComponent" component={CartComponent} />
@@ -51,7 +51,7 @@ const drawerNavigator = () => {
       backBehavior="initialRoute" 
       drawerContentOptions={{ contentContainerStyle: drawerContentStyle }}
     >
-      <Drawer.Screen name="Main Screen" component={mainNavigator} />
+      <Drawer.Screen name="Home Page" component={mainNavigator} />
       <Drawer.Screen name="Change Email" component={ChangeEmail} />
       <Drawer.Screen name="Change Name" component={ChangeName} />
       <Drawer.Screen name="Change Payment" component={ChangePayment} />
