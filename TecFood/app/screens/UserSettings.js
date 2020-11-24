@@ -1,13 +1,32 @@
-import React from "react"
-import { StyleSheet, Dimensions, Text, View, Alert } from "react-native"
-import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import React from "react";
+import { StyleSheet, Dimensions, Text, View, Alert } from "react-native";
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { DrawerItem } from "@ui-kitten/components";
 import { Icon } from "@ui-kitten/components";
 import SyncStorage from "sync-storage";
 
 const { height, width } = Dimensions.get("screen");
-const emailIcon = () => <Icon name="email-outline" fill="#000" style={{ height: 25, width: 25 }} />;
-const settingsIcon = () => <Icon name="settings-2-outline" fill="#000" style={{ height: 25, width: 25 }} />;
-const cardIcon = () => <Icon name="credit-card-outline" fill="#000" style={{ height: 25, width: 25 }} />;
+const emailIcon = () => (
+  <Icon name="email-outline" fill="#000" style={{ height: 25, width: 25 }} />
+);
+const settingsIcon = () => (
+  <Icon
+    name="settings-2-outline"
+    fill="#000"
+    style={{ height: 25, width: 25 }}
+  />
+);
+const cardIcon = () => (
+  <Icon
+    name="credit-card-outline"
+    fill="#000"
+    style={{ height: 25, width: 25 }}
+  />
+);
+
+const rightArrowIcon = (props) => (
+  <Icon {...props} name="arrow-ios-forward-outline" />
+);
 
 function UserSettings(props) {
   const user = SyncStorage.get("USER");
@@ -16,58 +35,65 @@ function UserSettings(props) {
     Alert.alert("Logout", "Do you want to log out?", [
       {
         text: "Cancel",
-        style: "cancel"
+        style: "cancel",
       },
       {
         text: "Log out",
-        onPress: () => logout()
-      }
-    ])
-  }
+        onPress: () => logout(),
+      },
+    ]);
+  };
 
   const logout = () => {
     SyncStorage.remove("USER_TOKEN");
     props.navigation.navigate("SignUp");
   };
 
-
   return (
-    <DrawerContentScrollView {...props} >
-      <View style={styles.drawer_header} >
+    <DrawerContentScrollView {...props} style={{ backgroundColor: "#F7FBFB" }}>
+      <View style={styles.drawer_header}>
         <View>
           <Text style={styles.hi}>Hi</Text>
           <Text style={styles.name}>{user.Name}</Text>
         </View>
         <Icon name="person" style={styles.icon} fill="#000" />
       </View>
-      <View style={styles.item_list} >
+      <View style={styles.item_list}>
         <Text style={styles.title}>My Account</Text>
-        <View>
-          <DrawerItem 
-            label={() => <Text style={styles.item_label}>Change Email</Text>} 
-            icon={emailIcon} 
+        <View style={{ backgroundColor: "#FFFFFF" }}>
+          <DrawerItem
+            title="Change Email"
+            accessoryLeft={emailIcon}
             onPress={() => props.navigation.navigate("Change Email")}
+            accessoryRight={rightArrowIcon}
+            style={{ paddingLeft: width * 0.05 }}
           />
           <View style={styles.divider} />
-          <DrawerItem 
-            label={() => <Text style={styles.item_label}>Change Name</Text>} 
-            icon={settingsIcon}
-            onPress={() => props.navigation.navigate("Change Name")} 
+          <DrawerItem
+            title="Change Name"
+            accessoryLeft={settingsIcon}
+            onPress={() => props.navigation.navigate("Change Name")}
+            accessoryRight={rightArrowIcon}
+            style={{ paddingLeft: width * 0.05 }}
           />
           <View style={styles.divider} />
-          <DrawerItem 
-            label={() => <Text style={styles.item_label}>Change Payment</Text>} 
-            icon={cardIcon} 
+          <DrawerItem
+            title="Change Payment"
+            accessoryLeft={cardIcon}
             onPress={() => props.navigation.navigate("Change Payment")}
+            accessoryRight={rightArrowIcon}
+            style={{ paddingLeft: width * 0.05 }}
           />
         </View>
       </View>
-      <View style={styles.footer} >
-        <Icon name="log-out" style={{height: 32, width: 32}} fill="#000" />
-        <Text style={styles.logout} onPress={() => handleAlert()} >Logout</Text>
+      <View style={styles.footer}>
+        <Icon name="log-out" style={{ height: 32, width: 32 }} fill="#000" />
+        <Text style={styles.logout} onPress={() => handleAlert()}>
+          Logout
+        </Text>
       </View>
     </DrawerContentScrollView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -105,7 +131,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   item_list: {
-    height: height * 0.5
+    height: height * 0.5,
   },
   item_label: {
     fontFamily: "OpenSans_Regular",
@@ -117,12 +143,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
+    backgroundColor: "#FFFFFF",
   },
   logout: {
-    left: 10,
-    color: "#062D69",
-    fontSize: 18,
-  }
+    paddingLeft: 5,
+    color: "#000000",
+    fontSize: 14,
+  },
 });
 
 export default UserSettings;
