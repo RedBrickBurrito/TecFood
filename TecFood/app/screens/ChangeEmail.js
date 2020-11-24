@@ -50,10 +50,12 @@ function ChangeEmail({ navigation }) {
     }
   };
 
+  // If the component mounted, validate the input
   useEffect(() => {
     if (mounted.current) validate();
   }, [email]);
 
+  // Set mounted to true when the component mounted
   useEffect(() => {
     mounted.current = true;
   }, []);

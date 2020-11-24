@@ -107,20 +107,23 @@ function SignUp(props) {
     setSecureTextEntry(!secureTextEntry);
   };
 
-  const renderIcon = (props) => (
+  const renderEyeIcon = (props) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
       <Icon {...props} name={secureTextEntry ? "eye-off" : "eye"} />
     </TouchableWithoutFeedback>
   );
 
+  // If the component is mounted, validate the inputs
   useEffect(() => {
     if (mounted.current) validate();
   }, [data]);
 
+  // When the component mounts, set mounted to true
   useEffect(() => {
     mounted.current = true;
   }, []);
 
+  // If there is a user logged in, redirect to HomePage
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
@@ -174,7 +177,7 @@ function SignUp(props) {
           }
           style={styles.submit_text}
           status={status.password}
-          accessoryRight={renderIcon}
+          accessoryRight={renderEyeIcon}
           secureTextEntry={secureTextEntry}
           textStyle={styles.input_text}
           caption="It must contain a minimum of 8 characters, 1 number, 1 uppercase and 1 lowercase letter."

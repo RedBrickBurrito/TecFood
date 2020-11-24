@@ -63,10 +63,12 @@ function ChangeName({ navigation }) {
     }
   };
 
+  // If the component mounted, validate the input
   useEffect(() => {
     if (mounted.current) validate();
   }, [name]);
 
+  // Set mounted to true when the component mounted
   useEffect(() => {
     mounted.current = true;
   }, []);

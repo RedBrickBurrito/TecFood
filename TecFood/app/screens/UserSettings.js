@@ -9,7 +9,7 @@ const emailIcon = () => <Icon name="email-outline" fill="#000" style={{ height: 
 const settingsIcon = () => <Icon name="settings-2-outline" fill="#000" style={{ height: 25, width: 25 }} />;
 const cardIcon = () => <Icon name="credit-card-outline" fill="#000" style={{ height: 25, width: 25 }} />;
 
-function DrawerContent(props) {
+function UserSettings(props) {
   const user = SyncStorage.get("USER");
 
   const handleAlert = () => {
@@ -20,12 +20,12 @@ function DrawerContent(props) {
       },
       {
         text: "Log out",
-        onPress: () => handleLogout()
+        onPress: () => logout()
       }
     ])
   }
 
-  const handleLogout = () => {
+  const logout = () => {
     SyncStorage.remove("USER_TOKEN");
     props.navigation.navigate("SignUp");
   };
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DrawerContent;
+export default UserSettings;

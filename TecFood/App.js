@@ -20,7 +20,7 @@ import CartComponent from "./app/screens/CartComponent";
 import ChangeEmail from "./app/screens/ChangeEmail";
 import ChangeName from "./app/screens/ChangeName";
 import ChangePayment from "./app/screens/ChangePayment";
-import DrawerContent from "./app/screens/DrawerContent";
+import UserSettings from "./app/screens/UserSettings";
 
 const { height, width } = Dimensions.get("screen");
 const Start = createStackNavigator();
@@ -47,7 +47,7 @@ const drawerNavigator = () => {
   return(
     <Drawer.Navigator 
       screenOptions={{headerShown: false}} 
-      drawerContent={DrawerContent} 
+      drawerContent={UserSettings} 
       backBehavior="initialRoute" 
       drawerContentOptions={{ contentContainerStyle: drawerContentStyle }}
     >

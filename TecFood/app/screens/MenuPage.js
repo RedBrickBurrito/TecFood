@@ -34,10 +34,12 @@ export const MenuPage = ({ route, navigation }) => {
     setSelectedProduct(item);
   };
 
+  // If the component is mounted, set the modal visible
   useEffect(() => {
     if (mounted.current) setVisible(true);
   }, [selectedProduct]);
 
+  // Fetch only the available items and set mounted to true
   useEffect(() => {
     axios
       .get(

@@ -56,7 +56,7 @@ function HomePage(props) {
     setMenuVisible(!menuVisible);
   };
 
-  const handleAlert = () => {
+  const handleLogoutAlert = () => {
     Alert.alert("Logout", "Do you want to log out?", [
       {
         text: "Cancel",
@@ -92,7 +92,7 @@ function HomePage(props) {
         <MenuItem
           accessoryLeft={logoutIcon}
           title="Logout"
-          onPress={() => handleAlert()}
+          onPress={() => handleLogoutAlert()}
         />
       </OverflowMenu>
     </React.Fragment>
