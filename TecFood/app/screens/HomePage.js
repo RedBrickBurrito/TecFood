@@ -60,14 +60,14 @@ function HomePage(props) {
     Alert.alert("Logout", "Do you want to log out?", [
       {
         text: "Cancel",
-        style: "cancel"
+        style: "cancel",
       },
       {
         text: "Log out",
-        onPress: () => logout()
-      }
-    ])
-  }
+        onPress: () => logout(),
+      },
+    ]);
+  };
 
   const logout = () => {
     SyncStorage.remove("USER_TOKEN");
@@ -200,7 +200,11 @@ function HomePage(props) {
           borderTopRightRadius: 29,
         }}
       >
-        <BottomNavigationTab icon={userIcon} title="User" onPressIn={() => props.navigation.openDrawer()}/>
+        <BottomNavigationTab
+          icon={userIcon}
+          title="User"
+          onPressIn={() => props.navigation.openDrawer()}
+        />
         <BottomNavigationTab icon={homeIcon} title="Home" />
         <BottomNavigationTab icon={searchIcon} title="Search" />
         <BottomNavigationTab icon={shoppingCartIcon} title="Orders" />
