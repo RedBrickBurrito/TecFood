@@ -14,9 +14,10 @@ import {
 import HeaderImageScrollView, {
   TriggeringView,
 } from "react-native-image-header-scroll-view";
-import Animated, { color } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 import ProductPage from "./ProductPage";
 import axios from "axios";
+import CartComponent from "./CartComponent";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
@@ -130,6 +131,7 @@ export const MenuPage = ({ route, navigation }) => {
           })}
         </TriggeringView>
       </HeaderImageScrollView>
+      <CartComponent />
       <Modal
         visible={visible}
         backdropStyle={styles.backdrop}

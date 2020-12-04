@@ -127,7 +127,7 @@ function SignUp(props) {
   useFocusEffect(() => {
     const user = SyncStorage.get("USER_TOKEN");
 
-    if(user) props.navigation.navigate("Drawer");
+    if (user) props.navigation.navigate("Drawer");
   });
 
   return (
@@ -168,6 +168,7 @@ function SignUp(props) {
           style={styles.submit_text}
           status={status.email}
           textStyle={styles.input_text}
+          keyboardType="email-address"
         />
         <Input
           placeholder="Password"
