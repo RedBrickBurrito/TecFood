@@ -20,6 +20,7 @@ import {
   ImageBackground,
   Alert,
 } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import axios from "axios";
 import Carousel from "react-native-snap-carousel";
 import SyncStorage from "sync-storage";
@@ -46,6 +47,10 @@ function HomePage(props) {
   const [menuVisible, setMenuVisible] = React.useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const user = SyncStorage.get("USER");
+
+  function countProperties(obj) {
+    return Object.keys(obj).length;
+}
 
   const getFirstNameUser = () => {
     const splitString = user.Name.split(" ");
@@ -135,6 +140,15 @@ function HomePage(props) {
         componentIsMounted.current = false;
       });
   }, []);
+
+  useFocusEffect(() => {
+    if (SyncStorage.get("cart") == undefined) {
+      SyncStorage.set("cart", {});
+    }
+    const cart = SyncStorage.get("cart");
+    const carLength = countProperties(cart);
+    console.log(`Shopping cart (length ${carLength}): `, cart)
+  })
 
   const renderRestaurant = ({ item }) => (
     <Card

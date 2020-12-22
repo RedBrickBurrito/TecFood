@@ -38,16 +38,25 @@ function ProductPage({ product, hide }) {
     }
   };
 
-  const handleAddToCart = (productId, productName, productQuantity) => {
-    item = { product: productId, name: productName, quantity: productQuantity };
+  const handleAddToCart = (productId, productName, productQuantity, productPrice) => {
+    const item = { product: productId, name: productName, quantity: productQuantity, price: (productQuantity * productPrice) };
+
+    // If there's no cart in storage, create one
     if (SyncStorage.get("cart") == undefined) {
       SyncStorage.set("cart", {});
     }
-    cart = SyncStorage.get("cart");
-    SyncStorage.set("cart", { ...cart, item });
+    const cart = SyncStorage.get("cart");
+
+    // If the product is already in the cart, only update the quantity and the price
+    if(cart[productName] !== undefined) {
+      cart[productName].quantity = cart[productName].quantity + productQuantity;
+      cart[productName].price = cart[productName].quantity * productPrice;
+    } else {
+      cart[productName] = item;
+    }
+
+    SyncStorage.set("cart", cart);
     showCartAlert(productName);
-    const cartItems = SyncStorage.get("cart");
-    console.log(cartItems);
   };
 
   return (
@@ -115,7 +124,7 @@ function ProductPage({ product, hide }) {
         <Button
           style={styles.addToCart}
           size="medium"
-          onPress={() => handleAddToCart(product._id, product.name, quantity)}
+          onPress={() => handleAddToCart(product._id, product.name, quantity, (product.price / 100))}
         >
           <Text>Add to Cart (${(product.price / 100) * quantity})</Text>
         </Button>

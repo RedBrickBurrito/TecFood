@@ -13,7 +13,6 @@ export function showCartAlert(productName) {
     [{ text: "Close" }],
     { cancelable: false }
   );
-  countProductItemsinCart();
 }
 
 function CartComponent(props) {
@@ -21,15 +20,6 @@ function CartComponent(props) {
   const price = 150;
   const bs = React.createRef();
   const fall = new Animated.Value(1);
-
-  const countProductItemsinCart = () => {
-    if (quantity == 1) {
-      return quantity;
-    } else {
-      quantity += 1;
-      return quantity;
-    }
-  };
 
   const renderInner = () => (
     <View style={styles.bottom_sheet_content}>
