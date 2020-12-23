@@ -15,25 +15,46 @@ import HeaderImageScrollView, {
   TriggeringView,
 } from "react-native-image-header-scroll-view";
 import Animated from "react-native-reanimated";
-import ProductPage from "./ProductPage";
 import axios from "axios";
+import SyncStorage from "sync-storage";
+
 import CartComponent from "./CartComponent";
+import ProductPage from "./ProductPage";
 
 const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
 export const MenuPage = ({ route, navigation }) => {
-  const [visible, setVisible] = React.useState(false);
-  const [selectedProduct, setSelectedProduct] = React.useState({});
+  const [visible, setVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const [items, getItems] = useState([]);
+  const [cartInfo, setCartInfo] = useState({quantity: 0, price: 0});
   const mounted = useRef();
 
   const MAX_HEIGHT = 250;
 
   const { restaurantId, restaurantName } = route.params;
-  const [items, getItems] = useState([]);
 
   const handleProductClick = (item) => {
     setSelectedProduct(item);
   };
+
+  // When closing the ProductPage modal, update the cart info
+  useEffect(() => {
+    if(!visible) {
+      if (SyncStorage.get("cart") == undefined) {
+        SyncStorage.set("cart", {});
+      }
+      const storedCart = SyncStorage.get("cart")
+      let quantity, price = 0;
+      quantity = Object.keys(storedCart).length;
+
+      Object.values(storedCart).forEach(item => {
+        price += item.price;
+      });
+
+      setCartInfo({quantity: quantity, price: price})
+    }
+  }, [visible])
 
   // If the component is mounted, set the modal visible
   useEffect(() => {
@@ -131,7 +152,7 @@ export const MenuPage = ({ route, navigation }) => {
           })}
         </TriggeringView>
       </HeaderImageScrollView>
-      <CartComponent />
+      <CartComponent cartInfo={cartInfo}/>
       <Modal
         visible={visible}
         backdropStyle={styles.backdrop}

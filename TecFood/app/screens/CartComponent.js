@@ -15,9 +15,9 @@ export function showCartAlert(productName) {
   );
 }
 
-function CartComponent(props) {
-  const quantity = 1;
-  const price = 150;
+function CartComponent({cartInfo}) {
+  const quantity = cartInfo.quantity;
+  const price = cartInfo.price;
   const bs = React.createRef();
   const fall = new Animated.Value(1);
 
