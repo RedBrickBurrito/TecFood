@@ -21,7 +21,7 @@ import { showCartAlert } from "./CartComponent";
 const { height, width } = Dimensions.get("window");
 const closeIcon = (props) => <Icon {...props} name="close-circle-outline" />;
 
-function ProductPage({ product, hide }) {
+function ProductPage({ product, hide, showCartComponent }) {
   const [quantity, setQuantity] = useState(1);
   const [checkboxes, setCheckboxes] = useState({ agave: false, maple: false });
   const [special, setSpecial] = useState("");
@@ -38,8 +38,18 @@ function ProductPage({ product, hide }) {
     }
   };
 
-  const handleAddToCart = (productId, productName, productQuantity, productPrice) => {
-    const item = { product: productId, name: productName, quantity: productQuantity, price: (productQuantity * productPrice) };
+  const handleAddToCart = (
+    productId,
+    productName,
+    productQuantity,
+    productPrice
+  ) => {
+    const item = {
+      product: productId,
+      name: productName,
+      quantity: productQuantity,
+      price: productQuantity * productPrice,
+    };
 
     // If there's no cart in storage, create one
     if (SyncStorage.get("cart") == undefined) {
@@ -48,15 +58,19 @@ function ProductPage({ product, hide }) {
     const cart = SyncStorage.get("cart");
 
     // If the product is already in the cart, only update the quantity and the price
-    if(cart[productName] !== undefined) {
-      cart[productName].quantity = cart[productName].quantity + productQuantity;
-      cart[productName].price = cart[productName].quantity * productPrice;
+    if (cart[productId] !== undefined) {
+      cart[productId].quantity = cart[productId].quantity + productQuantity;
+      cart[productId].price = cart[productId].quantity * productPrice;
     } else {
-      cart[productName] = item;
+      showCartComponent();
+      cart[productId] = item;
     }
 
     SyncStorage.set("cart", cart);
     showCartAlert(productName);
+    {
+      hide;
+    }
   };
 
   return (
@@ -124,7 +138,14 @@ function ProductPage({ product, hide }) {
         <Button
           style={styles.addToCart}
           size="medium"
-          onPress={() => handleAddToCart(product._id, product.name, quantity, (product.price / 100))}
+          onPress={() =>
+            handleAddToCart(
+              product._id,
+              product.name,
+              quantity,
+              product.price / 100
+            )
+          }
         >
           <Text>Add to Cart (${(product.price / 100) * quantity})</Text>
         </Button>

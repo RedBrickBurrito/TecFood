@@ -25,9 +25,16 @@ const backIcon = (props) => <Icon {...props} name="arrow-circle-left" />;
 
 export const MenuPage = ({ route, navigation }) => {
   const [visible, setVisible] = useState(false);
+  const [cartVisible, setCartVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [items, getItems] = useState([]);
-  const [cartInfo, setCartInfo] = useState({quantity: 0, price: 0});
+  const [cartInfo, setCartInfo] = useState({
+    productId: 0,
+    name: [],
+    quantity: 0,
+    price: 0,
+    priceArr: [],
+  });
   const mounted = useRef();
 
   const MAX_HEIGHT = 250;
@@ -40,21 +47,35 @@ export const MenuPage = ({ route, navigation }) => {
 
   // When closing the ProductPage modal, update the cart info
   useEffect(() => {
-    if(!visible) {
+    if (!visible) {
       if (SyncStorage.get("cart") == undefined) {
         SyncStorage.set("cart", {});
       }
-      const storedCart = SyncStorage.get("cart")
-      let quantity, price = 0;
+      const storedCart = SyncStorage.get("cart");
+      let quantity,
+        productId,
+        price = 0;
       quantity = Object.keys(storedCart).length;
 
-      Object.values(storedCart).forEach(item => {
+      let name = [];
+      let priceArr = [];
+
+      Object.values(storedCart).forEach((item) => {
         price += item.price;
+        productId = item.product;
+        name.push(item.name);
+        priceArr.push(item.price);
       });
 
-      setCartInfo({quantity: quantity, price: price})
+      setCartInfo({
+        productId: productId,
+        name: name,
+        quantity: quantity,
+        price: price,
+        priceArr: priceArr,
+      });
     }
-  }, [visible])
+  }, [visible]);
 
   // If the component is mounted, set the modal visible
   useEffect(() => {
@@ -152,13 +173,22 @@ export const MenuPage = ({ route, navigation }) => {
           })}
         </TriggeringView>
       </HeaderImageScrollView>
-      <CartComponent cartInfo={cartInfo}/>
+      {cartVisible ? (
+        <CartComponent
+          cartInfo={cartInfo}
+          hideCartComponent={() => setCartVisible(false)}
+        />
+      ) : null}
       <Modal
         visible={visible}
         backdropStyle={styles.backdrop}
         onBackdropPress={() => setVisible(false)}
       >
-        <ProductPage product={selectedProduct} hide={() => setVisible(false)} />
+        <ProductPage
+          product={selectedProduct}
+          hide={() => setVisible(false)}
+          showCartComponent={() => setCartVisible(true)}
+        />
       </Modal>
     </SafeAreaView>
   );
@@ -185,7 +215,7 @@ const styles = StyleSheet.create({
     width: wp("81%"),
     height: hp("22%"),
     flex: 1,
-    top: "1%",
+    top: "7%",
     backgroundColor: "#f7fbfb",
     borderRadius: 29,
     shadowColor: "#dbebeb",
