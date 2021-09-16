@@ -20,4 +20,4 @@ or
 expo start
 ```
 # Main Screen
-![alt text](https://imgur.com/a/Yh29xPG)
+![alt text](https://i.imgur.com/PCUOnLv.png?1)
