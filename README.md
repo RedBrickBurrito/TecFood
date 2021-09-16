@@ -19,5 +19,5 @@ or
 ```sh
 expo start
 ```
-# Main Screen
+# Screens
 ![alt text](https://i.imgur.com/PCUOnLv.png?1) ![alt_text](https://i.imgur.com/iBnLtU2.png?1)
